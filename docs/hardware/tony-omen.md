@@ -49,6 +49,11 @@
   - `nvme0n1p4` — 768 MB (WinRE)
   - `nvme0n1p5` — 64.9 GB → Ubuntu `/`
 - **Secondary:** WD WD5000LPLX-22ZNT — 500 GB 2.5" SATA HDD (`/dev/sdb`)
+  - `sdb1` — 499 MB
+  - `sdb2` — 128 MB
+  - `sdb3` — 20 GB
+  - `sdb4` — 445.1 GB
+  - ⚠️ **Note (2026-07-08):** `gdisk` reports no valid partition table; `sdb1`–`sdb4` throw I/O errors when read directly. Drive may be failing or in an inconsistent state. `lsblk` shows partitions but `blkid` returns nothing. Recommend checking SMART data (`smartctl -a /dev/sdb`).
 - **SATA Controller:** Intel 82801 Mobile SATA Controller (RAID mode)
 
 ---
