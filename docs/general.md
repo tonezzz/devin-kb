@@ -1,6 +1,6 @@
 # General Knowledge
 
-- Name: [your name]
+- Name: Tony
 - Time zone: UTC+7
 - Primary goal: Build a syncable knowledge base that works with Devin, Windsurf, and other AI tools.
 
