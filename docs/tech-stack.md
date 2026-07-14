@@ -4,6 +4,7 @@
 - AI agents: Devin, Cascade, Claude Code, Codex
 - Knowledge base: Markdown files synced via GitHub
 - OS: Linux (primary), with access to macOS/Windows machines
+- Container/Compose TUI: lazydocker
 
 ## Notes
 

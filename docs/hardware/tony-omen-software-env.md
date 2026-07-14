@@ -29,7 +29,7 @@
 
 | Path | Description |
 |---|---|
-| `~/CascadeProjects/gaussian-splatting-docker` | Dockerised 3D Gaussian Splatting pipeline (3DGS, COLMAP, NeRFStudio) |
+| `~/CascadeProjects/gaussian-splatting-docker` | Dockerised 3D Gaussian Splatting pipeline (3DGS, COLMAP, NeRFStudio). Renamed to `chaba` on GitHub: `https://github.com/tonezzz/chaba.git` |
 | `~/devin-kb` | Shared AI knowledge base (this repo) |
 
 ---
