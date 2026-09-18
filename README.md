@@ -29,13 +29,14 @@ git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPO.git
 git push -u origin main
 ```
 
-On every other machine, clone it to the **same path** so rules can find it:
+On every other machine, clone it under `~/CascadeProjects` and add the `~/devin-kb` symlink so rules can find it at either path:
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/YOUR_REPO.git ~/devin-kb
+git clone https://github.com/YOUR_USERNAME/YOUR_REPO.git ~/CascadeProjects/devin-kb
+ln -sfn ~/CascadeProjects/devin-kb ~/devin-kb
 ```
 
-> Keeping the path consistent (e.g., `~/devin-kb`) makes global AI rules reliable across machines.
+> Keeping the `~/devin-kb` path consistent (even as a symlink) makes global AI rules reliable across machines.
 
 ## 2. Make Windsurf/Cascade aware of it
 

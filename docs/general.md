@@ -7,4 +7,4 @@
 ## Common workflows
 
 - Always commit KB changes to GitHub after each session so they are available on every PC.
-- Keep the KB repo at `~/devin-kb` on every machine for consistent path references.
+- Keep the KB repo cloned at `~/CascadeProjects/devin-kb` with a `~/devin-kb` symlink on every machine for consistent path references.

@@ -1,11 +1,17 @@
 ---
 trigger: always_on
-description: Load the user's personal knowledge base from ~/devin-kb whenever it is available.
+description: Load the user's personal knowledge base whenever it is available.
 ---
 
 # Personal Knowledge Base
 
-You should always consider the user's personal knowledge base when answering questions or making decisions. The KB is stored at `~/devin-kb` (or the current workspace if it is the KB repo itself).
+You should always consider the user's personal knowledge base when answering questions or making decisions. Locate the KB repo by checking, in order:
+
+1. `~/devin-kb`
+2. `~/CascadeProjects/devin-kb`
+3. The current workspace, if it is the KB repo itself
+
+(Convention: the repo is cloned under `~/CascadeProjects/devin-kb` and `~/devin-kb` is a symlink to it.)
 
 ## What to do
 
@@ -18,3 +24,4 @@ You should always consider the user's personal knowledge base when answering que
 - `docs/general.md` — high-level facts about the user and their workflows.
 - `docs/preferences.md` — coding style, communication preferences, and tools.
 - `docs/tech-stack.md` — technologies, frameworks, and infrastructure the user uses.
+- `docs/hardware/` — per-machine hardware and environment assessments.
