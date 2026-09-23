@@ -61,4 +61,7 @@ Rule of thumb: serverless beats dedicated GPU below ~2/3 utilization — almost 
 - `ADA_VIDEO_MODE=continuous` adds ~$0.28/hr vs ~$0.02–0.05/hr for `activity` mode — keep activity.
 - Habit confirmations (flash-lite single images): negligible (<$1/mo).
 - If `GEMINI_API_KEY` is a free-tier AI Studio key, usage under daily limits is $0.
-- Per-session token counters logged via `usage_metadata` (added 2026-09-22 in realtime_provider.py).
+- Token usage is ledgered per-source in `backend/usage_tracker.py` and persisted to
+  `data/usage.jsonl` (env `ADA_USAGE_LOG`; `off` disables). Ada answers usage/cost
+  questions via the `ada_usage_summary` tool (source filter + reset); modality split,
+  cached/tool-use tokens, turn counts, per-day buckets, rough USD estimate.
