@@ -27,6 +27,27 @@ vs an actual crash.
   driver update installed without reboot — GPU work silently falls back
   to CPU until rebooted.
 
+## Offload to mn01 (same day)
+
+Two always-on services moved omen → mn01 (i5-7400T, mostly idle):
+
+- `yolo-xiaomi` (:8780) — ~24% CPU busy-loop; pulls frames from go2rtc on
+  tony-dell and POSTs to tony-ha, so nothing needed omen locally. HA config
+  now points at `mn01.taila0626a.ts.net:8780` (tailnet = survives mn01
+  leaving LAN). Deps: `~/.cache/ultralytics-yolo-venv` on mn01 (torch-cpu
+  wheels install fine on py3.14). Old unit disabled on omen.
+- `weaviate-embedding` (:5000, all-MiniLM-L6-v2, ~500MB RSS) — all callers
+  use `localhost:5000`, so omen keeps `weaviate-embed-proxy.socket`
+  (systemd-socket-proxyd → 100.106.196.22:5000). Nightly weaviate-index
+  unchanged.
+
+Other wins: netdata container on omen was at ~26% CPU on default 1s
+interval → `update every = 5` in-container (now ~1.5%). Its restart exposed
+a stale NVIDIA CDI spec (`/etc/cdi`, `/var/run/cdi` referenced removed
+595.84 libs after the 595.91 update) — patched both in place with sed;
+nvidia-cdi regen is still blocked by the NVML kernel-module mismatch until
+the pending reboot.
+
 ## Quick triage commands
 
 ```bash
