@@ -3,6 +3,10 @@
 Reading-order notes and the concept map Tony is using as an analogy lens for
 Chaba Nest (compound AI, tiered personas, federated agents).
 
+Canonical project-side doc: `chaba` repo →
+`docs/kb/nest-asher-polity-inspiration.md` (adopted 2026-10-08 as the Nest
+concept direction; linked from the nest-* cards and SSOT).
+
 ## Series arcs (roughly chronological to read)
 
 - **Agent Cormac** — *Gridlinked*, *The Line of Polity*, *Brass Man*,
