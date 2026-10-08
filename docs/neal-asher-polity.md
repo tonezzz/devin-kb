@@ -65,6 +65,27 @@ Intelligence hierarchy (small → large):
   dictatorship rather than a democracy.
 - **Memcording** — recorded personalities; death is negotiable, which
   changes what "intelligence" means.
+- **Subpersonae (haiman)** — Orlandine runs isolated compartmented minds to
+  control dangerous systems (Jain-contaminated mycelium on an air-gapped
+  computer). The sandboxed-submind pattern.
+- **Fabricated persona provenance** — EC built Horace Blegg's mind 30s after
+  waking, gave him a manufactured history, ran him in Golem chassis then
+  human substrate: "a probe into human society" (*Polity Agent*). Persona
+  continuity is deliberately engineered, not incidental.
+- **HK programs / forensic read** — greater minds (Jerusalem) inject HK
+  programs into lesser minds to rifle systems and inspect memories;
+  one-sided access (*Polity Agent*).
+- **The Brockle** — a dedicated forensic/hunter AI class that pursues rogue
+  AIs like Penny Royal. Specialist auditing minds.
+- **Swarm AI** — Penny Royal is a mind "fractured into a swarm" (per Asher),
+  seeking reintegration; Sverl is a tri-part prador-human-AI compound.
+  Compound intelligence can be one mind shard-split and re-merged.
+- **Skaidon hazard** — Iverus Skaidon mind-linked to the Craystein AI and
+  invented U-space travel; the link burned out his mind. Full-bandwidth
+  human-AI coupling destroys the human — the gate must also throttle.
+- Secondary scholarship: *Polity Without Politics?* (J. Evol. & Tech., 2015)
+  analyzes the AI-rule-vs-democracy trade — the Polity works but abolishes
+  politics; Nest keeps politics (the human veto) deliberately.
 
 ## Mapping to Chaba Nest (as of 2026-10-08)
 
