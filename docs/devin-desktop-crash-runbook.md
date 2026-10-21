@@ -11,6 +11,7 @@ Canonical sources: `chaba` repo `scripts/devin/` + `docs/ssot/infrastructure/sso
 | App dead but `app-devin-desktop-*.scope` still active | Orphaned tool-spawned children (headless Chrome `user-data-dir=/tmp/chrome-devtools-profile`, stuck probes) keep burning CPU | `systemctl --user stop app-devin-desktop-*.scope`; the watchdog now handles this automatically |
 | Dialog "The window terminated unexpectedly (reason: 'killed')" + watchdog.log shows `Killing wedged renderer` | Watchdog killed a legit busy renderer (e.g. active agent session, indexing) — looks like a crash but isn't | Safest recovery is a full `nohup` relaunch (Reopen usually works too). Kill is now disabled on tony-omen via `~/.config/devin/watchdog.conf` |
 | Dialog "The window terminated unexpectedly" won't dismiss via xdotool | Electron crash dialog ignores XTEST synthetic input | Do NOT `wmctrl -c` the dialog — it tears down the whole app (observed 2026-09-21). Kill the main process and relaunch instead |
+| App not running; watchdog.log repeats `Auto-restarting on DISPLAY=:NNNN` | Auto-restart picked a greeter-owned X socket (e.g. gdm Xwayland `:1024` beats CRD Xvfb `:20` in glob order); launches die on auth silently | Fixed watchdog 2026-10-21 (`display_targets` prefers the socket whose owner is your UID + its `-auth` file, alerts on failed launch). Check `stat -c %U /tmp/.X11-unix/X*` to find the real display; manual relaunch with `DISPLAY=<yours> XAUTHORITY=~/.Xauthority` |
 
 ## Headless relaunch
 

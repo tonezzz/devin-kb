@@ -48,11 +48,37 @@ a stale NVIDIA CDI spec (`/etc/cdi`, `/var/run/cdi` referenced removed
 nvidia-cdi regen is still blocked by the NVML kernel-module mismatch until
 the pending reboot.
 
+## 2026-10-21: watchdog relaunching onto the greeter display
+
+Symptom: "Devin very lagging" but `pgrep -c devin-desktop` = 0 — the app
+wasn't running at all. Watchdog log showed `Auto-restarting devin-desktop
+on DISPLAY=:1024` every ~30 min for 36h+: the auto-restart iterated
+`/tmp/.X11-unix/X*` in glob order, and gdm's rootless Xwayland socket
+(`X1024`, owned by `gdm-greeter`) sorts before the user's CRD Xvfb
+(`X20`). Every launch landed on the greeter display, died on auth,
+retried forever — silent because the old code never checked survival.
+
+Diagnosis: `stat -c %U /tmp/.X11-unix/X*` — the socket file's owner is the
+X server's UID; the socket owned by `tony` is the real session. Also
+`systemctl --user list-units | grep auto-restart` found
+`yolo-xiaomi.service` crash-looping (5,766 restarts, each a pip-install
+burst) even though the service had moved to mn01 — `disabled` units still
+run if never `stop`ped.
+
+Fix (commit chaba `66e50037f`, deployed to omen+dell `~/.local/bin/`):
+`display_targets()` orders displays by socket ownership (ours first, with
+the server's own `-auth` file) and auto-restart now logs an ALERT if the
+launch doesn't survive 10s. `WATCHDOG_DISPLAY`/`WATCHDOG_XAUTHORITY` conf
+overrides exist if ever needed.
+
 ## Quick triage commands
 
 ```bash
-tail -60 ~/.local/share/devin/cli/watchdog.log          # hot renderer / hang dialog flags
+tail -60 ~/.local/share/devin/cli/watchdog.log          # hot renderer / hang dialog / restart-loop flags
+pgrep -c devin-desktop                                 # 0 = app not running at all
 systemctl --user list-units --type=scope --state=active 'app-devin-desktop-*'
+systemctl --user list-units | grep -i auto-restart     # crash-looping units = lag amplifier
+stat -c '%U %n' /tmp/.X11-unix/X*                      # user-owned socket = the real display
 ps -eo pid,%cpu,%mem,etimes,args --sort=-%cpu | head -25
 swapon --show; zramctl
 sqlite3 ~/.local/share/devin/cli/sessions.db \
