@@ -49,12 +49,44 @@ systemctl --user disable --now connect2socks v4fix-socks
 # remove "proxy" block from ~/.config/devin/config.json
 ```
 
+## Rogue DHCP server identified (2026-10-22)
+
+The LAN has **two competing DHCP servers**; whichever OFFER lands first wins:
+
+| | Rogue | Real router |
+|---|---|---|
+| Reply src / Server-ID | `0.0.0.0` | `192.168.2.1` |
+| Lease offered | `192.168.1.x`, gw `192.168.1.1`, DNS `192.168.1.1, 0.0.0.0`, 1h | `192.168.2.x`, 24h |
+| Reply src MAC | **`06:28:58:26:4b:2c`** | `98:00:6a:68:f7:c6` |
+
+- The rogue box holds **`192.168.2.93`** on the real subnet (captured via
+  `sudo tcpdump -e 'udp port 67'` + `nmap --script broadcast-dhcp-discover`).
+  Locally-administered MAC, all TCP ports closed, UDP 53+67 open → embedded
+  dnsmasq on an **unnumbered interface** (that's why replies come from
+  `0.0.0.0` and `192.168.1.1` never ARPs — the advertised gateway doesn't
+  exist on this segment).
+- Suspects: WiFi extender / spare router in broken AP mode / TV box.
+  Locate via router client list at `192.168.2.1` for MAC `06:28:58:26:4b:2c`.
+- **mn01 is also a victim**: its wired `enp1s0` took rogue lease
+  `192.168.1.101` (its own libvirt dnsmasq only binds `virbr0` — not the culprit).
+- WiFi was NOT at fault: `wlp3s0` (BCM43602/brcmfmac on a MacBookPro13,3)
+  joined the real AP (BSSID `98:00:6a:68:f7:c8`) but got a poisoned lease —
+  `192.168.1.111` with the dead-gw default route at metric 20060, which then
+  **wins over ethernet's good route** (30000). Missing `clm_blob`/`txcap_blob`
+  are advisory only ("limited channels").
+
 ## Real fix still needed
 
-Find the device serving 192.168.1.x DHCP on the LAN (its own v4 stack is likely
-hung — it hands out leases but never ARPs) or reboot the main router. The
-macbook should be getting 192.168.2.x. Second USB NIC `enx7ed2da73308a` has
-link but no NM profile — can't activate without local polkit auth.
+- **Find & unplug/fix `06:28:58:26:4b:2c`** (check router client list).
+- Immune-by-config alternative: static IPv4 on the macbook's ethernet —
+  `nmcli con mod netplan-enx00e04c361276 ipv4.method manual
+  ipv4.addresses 192.168.2.65/24 ipv4.gateway 192.168.2.1 ipv4.dns 192.168.2.1`
+  (rogue leases then can't poison it; wifi can also be left disconnected).
+- Repro command to catch both servers:
+  `sudo tcpdump -i <iface> -nn -e 'udp port 67 or udp port 68'` while running
+  `sudo nmap --script broadcast-dhcp-discover -e <iface>`.
+- Second USB NIC `enx7ed2da73308a` has link but no NM profile — can't
+  activate without local polkit auth (SSH polkit denies `nmcli dev connect`).
 
 ## Gotchas learned
 
