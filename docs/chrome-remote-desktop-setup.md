@@ -72,3 +72,22 @@ own X display on first connect. The machine should show **Online** at
 - Never commit host JSON files or PINs; the JSON contains `oauth_refresh_token`
   and `private_key`.
 - Related chaba docs: `chaba-tony-dell/docs/kb/chrome-remote-desktop-*.md`.
+## Lighter alternative: xrdp (added 2026-10-21)
+
+CRD is the heaviest remote option — an always-on Xvfb + H264 encoder resident
+even when nobody is connected. For lower resource use, `xrdp` + `xorgxrdp` is
+already installed and enabled on tony-dell (`:3389`, ufw-open, tailnet-open);
+`~/.xsession` launches a lightweight **LXQt** session only on connect. Verified
+reachable from tony-macbook over tailscale.
+
+Client on a Linux laptop (needs sudo):
+
+```bash
+sudo apt install freerdp3-x11            # lightest, CLI
+xfreerdp3 /v:tony-dell:3389 /u:tony /dynamic-resolution /cert:ignore
+# or: sudo apt install remmina           # GUI client, saved profiles
+```
+
+Even lighter: `ssh tony-dell` (terminal) or `ssh -X` for a single GUI window —
+no desktop session at all. Caveat: xrdp creates a *new* session, it does not
+share the console/CRD display.
