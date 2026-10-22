@@ -99,3 +99,22 @@ The LAN has **two competing DHCP servers**; whichever OFFER lands first wins:
   consider archiving old sessions (see devin-desktop-sluggishness.md).
 - One transient `ERR_BLOCKED_BY_RESPONSE (-27)` on first window nav through the
   proxy is normal; the retry succeeds (workbenchReady ~4s later).
+
+## Resolution (2026-10-22)
+
+- Static IPv4 applied on enx00e04c361276 (`192.168.2.65/24`, gw `192.168.2.1` via
+  `nmcli con mod ... ipv4.method manual`), then activated with
+  `nmcli dev reapply enx00e04c361276` at the console — reapply cannot be done
+  over SSH (polkit).
+- All workaround pieces removed: gsettings proxy → `none`,
+  `connect2socks`+`v4fix-socks` user units disabled and stopped, `http.proxy`
+  removed from Devin settings.json, `proxy` block removed from
+  `~/.config/devin/config.json`, `code.lock` cleared.
+- Devin relaunched via `/usr/share/devin-desktop/devin-desktop` with Wayland env
+  (`/usr/bin/devin-desktop` is the CLI shim — it exits instantly, don't use it
+  to start the GUI). `DISPLAY=:0` alone fails on the Wayland session — needs
+  `WAYLAND_DISPLAY=wayland-0 XDG_RUNTIME_DIR=/run/user/1000`.
+- Verified: direct IPv4 to api.devin.ai / windsurf-stable / server.codeium
+  ~0.7s each; sessions replaying; ACP connected.
+- Rogue DHCP server (`06:28:58:26:4b:2c`, holding 192.168.2.93) still live on
+  LAN — static IP on the macbook is the durable fix until the device is found.
