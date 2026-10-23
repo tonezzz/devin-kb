@@ -85,6 +85,17 @@ Open-source agentic IDEs/tools (approx stars, Oct 2026):
 
 Note: Void and Roo Code archived mid-2026 — space moves fast, check activity before adopting.
 
-## Candidate eval for Tony
+## Eval plan (decided 2026-10-23)
 
-~10-15 tasks from a known repo (bugfix/feature/refactor/test mix), frozen worktrees, identical prompts, 3 runs per tool, grade with existing test suite, log: pass rate / time / cost / interventions. `agent-cost-bench` is the fastest scaffold for this.
+Matrix: opencode, OpenHands, Devin, Antigravity — all four.
+
+- **Axis A (harness-isolated):** opencode vs OpenHands on one pinned API model (Claude or Gemini via key). Devin (SWE-2) and Antigravity (Gemini) can't share a model, so they only appear in Axis B.
+- **Axis B (product-level):** all four on best config.
+
+### Steps
+
+0. **Prereqs** — install opencode (npm/brew), OpenHands CLI (uv), Antigravity CLI; clone `aws-samples/sample-agent-cost-bench` to `~/evals/`; API key for pinned model. Antigravity free-tier weekly quota → spread its ~30 runs over days. Devin has no headless mode → run per-task in fresh sessions, semi-manual.
+1. **Task corpus via git archaeology** — mine repo history for commits that fixed a bug AND added a test: reset to parent, prompt = issue description, verifier = the fix's test. Pre-verified, real tasks, no extra test-writing. ~10-12 tasks across terrology + chaba + one service repo. Mix: 3 bugfix / 3 feature / 2 refactor / 2 test-writing / 1-2 service-touching (Tailscale). Pilot with 4 tasks before scaling.
+2. **Smoke test** — 2 tasks × each tool through cost-bench; verify worktree isolation, token/cost capture, verifier grading. Fallback: ~100-line bash worktree runner.
+3. **Full runs** — 10 tasks × 3 attempts × 4 cells ≈ 120 runs. Log: pass/fail, wall-clock, tokens, USD, interventions, unrelated-test breakage.
+4. **Report** — results.csv + summary committed back into this file/dir for cross-tool transfer.
