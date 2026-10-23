@@ -52,8 +52,18 @@ class".
 2. ✅ Ops corpus built (2026-10-23): O1–O4 all validated + verifiers
    bidirectionally tested; queued behind pilot (`config.ops.yaml`)
 3. Surface adapters: task.yaml → surface input → run → verify → report back
-   - kanban card body = prompt; board-api `/card` already supports
-     `action:{type: dispatch, repo}` + `queue:true` — half the adapter exists
+   - ✅ **kanban PROVEN end-to-end (2026-10-23, card `eval-surface-probe`):**
+     writer-seeded script-type card → queued → runner-agent on idc02 claimed
+     in ~1min → ran under systemd-run in synced chaba clone → result in
+     comms. No new dispatch code needed. Remaining gaps for the agent cell:
+     (a) opencode/openhands + litellm secret on a runner host (idc02 has
+     node v18, no npm, 10.7G free; dell has all but no runner-agent +
+     RAM-tight); (b) `/card` API gates `action.type` to dispatch|manual —
+     script cards seed on the writer checkout, then `POST /action do:queue`.
+     Secret hygiene: `cmd` is host-side `bash -lc` → can
+     `source ~/.config/secrets/*.env`, never enters card YAML/git.
+     Verify can ride the same cmd: `agent … && python3 score.py` →
+     AGENT_COST_BENCH_RESULT marker lands in card comms via do=finish.
    - chat msg → runner → reply with result + verify status
    - WP CPT post = task spec; comment = agent result + score
 4. Deliverable: **routing matrix + fallback ladder** in devin-kb — per task class,
