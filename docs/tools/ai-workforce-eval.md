@@ -24,6 +24,22 @@ paid frontier (Devin/SWE-2, Claude, GPT, Gemini paid)
 → cheap cloud (gemini-3.5-flash-lite via LiteLLM `bench`, OpenRouter budget)
 → free local (ollama llama3.2:3b / qwen7b, colab-gemma3 — asleep?)
 
+**Free-brain inventory (probed 2026-10-23, LiteLLM proxy on idc03):**
+
+| Model group | Backend | Status |
+|---|---|---|
+| `bench` → gemini-3.5-flash-lite | Gemini free tier | ✅ ALIVE — the workhorse (chores 1.0, code intern-grade) |
+| `tool-call`,`chat-local`,`summary`,`voice-aux`,`classify` | local smalls (llama3.2-class) | ✅ ALIVE — too weak for agents; fine for classify/summarize |
+| `ollama-qwen7b` → qwen2.5:7b | Ollama quadlet on idc02 (`:11434`) | ✅ ALIVE but CPU-slow — couldn't finish OpenHands turn 1 in 5min |
+| `gemini-2.5/3.5-flash(-lite)` direct | Gemini project | ❌ monthly spend cap |
+| `or-*` | OpenRouter | ❌ key weekly cap (resets ~Oct 26) |
+| `colab-gemma3` → gemma3:12b | Colab T4 reverse-SSH | ❌ session dead (ephemeral by design) |
+
+Upgrade paths for a real code brain: pull qwen2.5-coder:14b on idc02
+(~9GB — tight vs resident 6.8G ollama + services), wake the Colab worker,
+or raise the OpenRouter cap (cheapest paid). idc02 is the declared
+"free-lane compute OFF prod host" per the litellm config comment.
+
 ### Task classes
 
 - code-with-test (built: T1/T2/M1/M2 in `~/evals/tasks/`)
