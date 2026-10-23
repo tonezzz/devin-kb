@@ -92,10 +92,33 @@ Matrix: opencode, OpenHands, Devin, Antigravity — all four.
 - **Axis A (harness-isolated):** opencode vs OpenHands on one pinned API model (Claude or Gemini via key). Devin (SWE-2) and Antigravity (Gemini) can't share a model, so they only appear in Axis B.
 - **Axis B (product-level):** all four on best config.
 
+### Plain version
+
+A driving test for AI coders: same exam, same rules, machines grade it. Rewind a repo to before a known bug fix, tell each tool "fix this bug," run the test the original fixer wrote. Pass = tool did the job. Same brain (model) plugged into opencode + OpenHands isolates the tool body; Devin/Antigravity measured as whole products.
+
+### Pilot (decided)
+
+- Tasks T1, T2, M1, M4 (see below) × 3 tools (opencode, OpenHands, Devin) × 3 attempts ≈ 36 runs
+- Shared brain: **Claude Sonnet via OpenRouter** (`~/.config/secrets/openrouter.env`)
+- Antigravity deferred — `agy` needs manual install + Google login
+
 ### Steps
 
-0. **Prereqs** — install opencode (npm/brew), OpenHands CLI (uv), Antigravity CLI; clone `aws-samples/sample-agent-cost-bench` to `~/evals/`; API key for pinned model. Antigravity free-tier weekly quota → spread its ~30 runs over days. Devin has no headless mode → run per-task in fresh sessions, semi-manual.
-1. **Task corpus via git archaeology** — mine repo history for commits that fixed a bug AND added a test: reset to parent, prompt = issue description, verifier = the fix's test. Pre-verified, real tasks, no extra test-writing. ~10-12 tasks across terrology + chaba + one service repo. Mix: 3 bugfix / 3 feature / 2 refactor / 2 test-writing / 1-2 service-touching (Tailscale). Pilot with 4 tasks before scaling.
+0. **Prereqs** — DONE: opencode 1.19.4 (`~/.local/bin/opencode` symlink → npm prefix `~/.local/node`), openhands CLI (uv tool), devin CLI 3000.11.92 (headless runner via cost-bench `devin_export`), `aws-samples/sample-agent-cost-bench` cloned to `~/evals/repos/`. All task repos public.
+1. **Task corpus via git archaeology** — mine repo history for commits that fixed a bug AND added a test: reset to parent, prompt = issue description, verifier = the fix's test (held out: workspace at parent commit lacks it, verifier injects it). Pilot tasks:
+   - T1 terrology `f8a5d9c` — elevated-geom predicate fix + output-quality tests (easy)
+   - T2 terrology `efb9996` — double water recession fix + tests (medium)
+   - M1 mddb `c0850f0` — follower health reflects replication state + `TestHandleReplicationStatus_FollowerHealthyReflectsReplication` (medium, Go)
+   - M4 mddb `bfb3b7c` — stream binlog Rotate w/o buffering (hard, custom verifier)
 2. **Smoke test** — 2 tasks × each tool through cost-bench; verify worktree isolation, token/cost capture, verifier grading. Fallback: ~100-line bash worktree runner.
 3. **Full runs** — 10 tasks × 3 attempts × 4 cells ≈ 120 runs. Log: pass/fail, wall-clock, tokens, USD, interventions, unrelated-test breakage.
 4. **Report** — results.csv + summary committed back into this file/dir for cross-tool transfer.
+
+### Later corpus candidates
+
+- M2 mddb `497b982` open-only integrity proof + test
+- M3 mddb `dc88ede` + `ad7708a` snapshot-below-oldest fix + test commit
+- T3 terrology `ae92c85` building clipping fix
+- T4 terrology `be9bfa9` `--waterways` feature
+- M5 mddb `60ac37c` MDDB_FREELIST_SYNC default-on feature
+- S1 service task — ans-fleet (ansible-lint verify) or ada-pi
