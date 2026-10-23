@@ -93,3 +93,30 @@ class".
 
 pass rate (gate) · cost/task · wall-clock · tokens · human interventions ·
 unrelated-test breakage · babysitting minutes per task
+
+## Pilot results (2026-10-23, code class, gemini-3.5-flash-lite)
+
+`~/evals/results/20261023_084244_85baf9.json` — 4 code tasks × 2 tools = 8
+cells, all 8 timed out at 30min (0/8 gate). Manual follow-up on the timeouted
+workspaces:
+
+- **t1 opencode (manual gate): 6/7** — made a real, more careful edit this
+  time (`intersects` + per-point `covers` on STRtree) but it raised IndexError
+  at runtime → held-out test caught it. Same near-miss class as the smoke
+  test's `covers` swap. **flash-lite finds the file, writes a plausible fix,
+  the gate catches it — consistently, both times.**
+- t1 openhands: timeout, no edits. t2 both: timeout, openhands no edits.
+- m1/m2 (Go): timeout both tools — replication tasks too heavy for the lane.
+- Conclusion: on flash-lite, the code class does NOT converge (loops on
+  self-verification until killed — wall-clock control is a real metric, not a
+  test artifact). The lane's ceiling: chores (3/4 @ 1.0, see ops run) +
+  test-gated single-line near-misses. Code needs a ≥12B GPU brain or paid.
+
+## Colab GPU lane (gemma3:12b on T4)
+
+Turnkey config: `~/evals/config.colab.yaml` (validated) — t1 + o1 × opencode +
+openhands. Requires `colab-serve-worker.ipynb` tunnel UP on idc03
+(`127.0.0.1:11434` ← Colab Ollama, reverse-SSH as colabtun) and the notebook's
+`/model/new` cell registering `colab-gemma3` on the LiteLLM proxy. Model:
+gemma3:12b (~8GB q4, fits T4 15GB). Watch: `ss -tln | grep 127.0.0.1:11434` on
+idc03, or probe `curl http://127.0.0.1:11434/api/version` there.
