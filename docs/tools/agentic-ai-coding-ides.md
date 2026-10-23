@@ -28,6 +28,19 @@ Site: https://antigravity.google/
 - Paid tiers also have a hard weekly cap — heavy nonstop use still throttles.
 - Overage on paid tiers = purchased AI credits at Gemini Enterprise rates.
 
+## Surfaces per tool (which slots each fills)
+
+| Tool | Surfaces | Free lane? |
+|---|---|---|
+| Devin | Desktop, CLI (`devin -p`), web, MCP | paid (rate-limited) |
+| opencode | TUI (primary), desktop app, `serve` web UI, VS Code ext, Zed via ACP | yes + BYOK |
+| OpenHands | web GUI (watch agent drive editor/terminal/browser), VS Code ext, CLI, SDK, GH Actions | yes + BYOK |
+| Antigravity | standalone IDE + agent mgr + CLI + extensions + SDK | free weekly quota |
+| Zed | Rust editor, built-in agent panel (ACP hosts opencode) | free editor |
+
+Free IDE-ish lane = **Zed + opencode/ACP** or opencode desktop. Watch-an-agent-work = OpenHands web GUI. Only true agent-first IDE = Antigravity.
+Setup cards on the board: OPS-0795 (opencode interactive ~10min), OPS-0796 (Zed+ACP ~30-60min), OPS-0797 (OpenHands GUI ~30min), OPS-0798 (Antigravity ~30min + Google login).
+
 ## Dev flow: Devin vs Antigravity-style
 
 | | Devin (current setup) | Antigravity |
