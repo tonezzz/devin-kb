@@ -106,6 +106,8 @@ A driving test for AI coders: same exam, same rules, machines grade it. Rewind a
 - openhands: needs `LLM_MODEL=litellm_proxy/bench` — the unrecognized alias name disables prompt caching (Gemini free tier rejects CachedContent → 429). `openai/` route makes it echo system prompt instead of tool-calling.
 - First results (flash-lite, T1): opencode 6/7 tests w/ `covers` near-miss (real fix `covered_by`); openhands 0 edits (model too weak for its agent protocol)
 - flash-lite verdict: intern-grade — finds the file, plausible wrong fixes, MUST be behind test gates
+- **Ops-class results (O1–O4, 2026-10-23) — the important one:** both tools passed 3/4 ops chores at score 1.0 (endpoint probing→JSON, YAML config edit, systemctl state report). flash-lite+opencode did them in **12–16s each**. o3 log-triage: opencode 0.75 (prompt ambiguity — wrote `[dispatch-runner]` incl. brackets; prompt fixed), openhands timed out at 600s on the 11KB embedded-log prompt.
+- Ops verdict: **the free lane already carries chore-class work** — curl/systemctl/YAML chores pass the gate at $0. The gap is long-horizon code, not chores. OpenHands also scored 1.0 on 3 ops tasks — its protocol failure is specific to sustained code tasks, not chores.
 - Blocked: `devin auth login`, `agy` install+login (both manual); OR reset 2026-10-26
 - Held-out-test bias: injected Go tests reference fix-commit symbols (e.g. `rc.connected`) — compile fail = 0; may undercount behaviorally-correct divergent fixes
 - Antigravity deferred — `agy` needs manual install + Google login
