@@ -40,6 +40,35 @@ Upgrade paths for a real code brain: pull qwen2.5-coder:14b on idc02
 or raise the OpenRouter cap (cheapest paid). idc02 is the declared
 "free-lane compute OFF prod host" per the litellm config comment.
 
+**Local-brain attempts (2026-10-23, omen Ollama 0.40.3):**
+- `gpt-oss:20b` (13.8GB, ~5.7 tok/s CPU): emits tool calls at raw
+  `/api/chat` AND `/v1` level, but inside opencode it hallucinates
+  Claude-Code tool names (`repo_browser.apply_patch`, `assistant.bash`)
+  that don't exist in opencode's headless toolset → loop dies. Not viable
+  until schema-aligned.
+- `hermes3:8b`: responds through proxy alias but emits no tool calls
+  (writes "let me provide a function call" as text).
+- `gemma3:12b` (omen AND Colab notebook model): **official Ollama registry
+  build has NO tool support** — GitHub issue ollama/ollama#9680: Google
+  didn't train gemma3 for tools; Ollama maintainers refuse to add the tag.
+  Community workaround exists: `PetrosStav/gemma3-tools` template.
+  ⚠️ The colab notebook serves gemma3:12b — agent loops will fail on it
+  unless the worker pulls qwen3 instead.
+- **`qwen3:8b` — the winner so far (GitHub-recommended: thinking+tools).**
+  Pulled on omen (5.2GB). Emits tool calls via `/v1` (what opencode uses)
+  and through the LiteLLM proxy (`ollama-qwen3` alias, added to idc03
+  config + gateway restarted). In opencode it correctly calls the `write`
+  tool with proper content — first local model to align with opencode's
+  schema. Two quirks: (1) thinking-mode eats the token budget on short
+  requests (`think:false` fixes; tool calls still emitted with thinking
+  on); (2) wrote to `/hello.py` (fs root) instead of workspace cwd —
+  prompt-phrasing issue, not capability. **Testing on real eval task t1
+  now (`config.qwen3.yaml`).**
+- Litellm gateway on idc03 now carries aliases: `ollama-gemma12b`,
+  `ollama-hermes8b`, `ollama-qwen3` (all → omen 100.75.102.88:11434),
+  backed up config before edits, validated YAML, container restarted,
+  health 200.
+
 ### Task classes
 
 - code-with-test (built: T1/T2/M1/M2 in `~/evals/tasks/`)
