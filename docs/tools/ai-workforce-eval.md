@@ -27,7 +27,15 @@ paid frontier (Devin/SWE-2, Claude, GPT, Gemini paid)
 ### Task classes
 
 - code-with-test (built: T1/T2/M1/M2 in `~/evals/tasks/`)
-- chores/ops: restart service, update SSOT field, health check — needs new verifiers
+- chores/ops (built: O1–O4 in `~/evals/tasks/`, config `~/evals/config.ops.yaml`):
+  - `o1-endpoint-health` — probe 3 HTTP endpoints → `health.json`; verifier
+    re-probes live and compares (reachable + status code, incl. the reachable-404 case)
+  - `o2-yaml-config` — write `service.yaml` changing 2 fields, preserving the rest;
+    verifier parses YAML, scores changes + untouched-value preservation
+  - `o3-log-triage` — analyze embedded 184-line log → `triage.txt`
+    (total_lines, error_count, top_error_service); deterministic truth
+  - `o4-systemd-state` — `systemctl is-active` 3 units → `units.json`;
+    verifier re-queries systemctl live (covers a real ops-chore class)
 - docs/research: different scoring (rubric/judge)
 
 ## Key principle (proven 2026-10-23)
@@ -41,9 +49,11 @@ class".
 ## Phases
 
 1. Pilot (running): opencode vs openhands × 4 code tasks × flash-lite — baseline table
-2. Corpus expansion: chore/ops tasks with real verifiers (health endpoint, schema check)
+2. ✅ Ops corpus built (2026-10-23): O1–O4 all validated + verifiers
+   bidirectionally tested; queued behind pilot (`config.ops.yaml`)
 3. Surface adapters: task.yaml → surface input → run → verify → report back
-   - kanban card body = prompt; verifier hooks existing dispatch pipeline
+   - kanban card body = prompt; board-api `/card` already supports
+     `action:{type: dispatch, repo}` + `queue:true` — half the adapter exists
    - chat msg → runner → reply with result + verify status
    - WP CPT post = task spec; comment = agent result + score
 4. Deliverable: **routing matrix + fallback ladder** in devin-kb — per task class,
