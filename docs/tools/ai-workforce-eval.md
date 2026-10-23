@@ -52,18 +52,21 @@ class".
 2. ✅ Ops corpus built (2026-10-23): O1–O4 all validated + verifiers
    bidirectionally tested; queued behind pilot (`config.ops.yaml`)
 3. Surface adapters: task.yaml → surface input → run → verify → report back
-   - ✅ **kanban PROVEN end-to-end (2026-10-23, card `eval-surface-probe`):**
-     writer-seeded script-type card → queued → runner-agent on idc02 claimed
-     in ~1min → ran under systemd-run in synced chaba clone → result in
-     comms. No new dispatch code needed. Remaining gaps for the agent cell:
-     (a) opencode/openhands + litellm secret on a runner host (idc02 has
-     node v18, no npm, 10.7G free; dell has all but no runner-agent +
-     RAM-tight); (b) `/card` API gates `action.type` to dispatch|manual —
-     script cards seed on the writer checkout, then `POST /action do:queue`.
-     Secret hygiene: `cmd` is host-side `bash -lc` → can
-     `source ~/.config/secrets/*.env`, never enters card YAML/git.
-     Verify can ride the same cmd: `agent … && python3 score.py` →
-     AGENT_COST_BENCH_RESULT marker lands in card comms via do=finish.
+   - ✅ **kanban free-lane cell LIVE (2026-10-23):** card `eval-o1-opencode`
+     — writer-seeded script card → queued → runner-agent on idc02 claimed →
+     opencode 1.19.4 + gemini-3.5-flash-lite (LiteLLM proxy) ran the real
+     o1-endpoint-health task → inline verifier scored **1.0** → result in
+     card comms → done. ~2min, $0. idc02 now carries opencode +
+     `~/.config/opencode/opencode.json` (litellm provider) +
+     `~/.config/secrets/litellm-chaba.env`.
+     Recipe: `action:{type:script, host:idc02, script:{repo:chaba, cmd:"echo
+     <b64> | base64 -d | bash", timeout:N}}` + `queue` via `/action`. The b64
+     script sources secrets, runs the agent, then a verifier printing
+     `AGENT_COST_BENCH_RESULT` — score lands in comms via do=finish.
+     `/card` API gates `action.type` to dispatch|manual → script cards seed
+     on the writer checkout (precedented: OPS-0173).
+   - chat msg → runner → reply with result + verify status
+   - WP CPT post = task spec; comment = agent result + score
    - chat msg → runner → reply with result + verify status
    - WP CPT post = task spec; comment = agent result + score
 4. Deliverable: **routing matrix + fallback ladder** in devin-kb — per task class,
