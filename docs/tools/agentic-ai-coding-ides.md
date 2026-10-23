@@ -96,10 +96,18 @@ Matrix: opencode, OpenHands, Devin, Antigravity — all four.
 
 A driving test for AI coders: same exam, same rules, machines grade it. Rewind a repo to before a known bug fix, tell each tool "fix this bug," run the test the original fixer wrote. Pass = tool did the job. Same brain (model) plugged into opencode + OpenHands isolates the tool body; Devin/Antigravity measured as whole products.
 
-### Pilot (decided)
+### Pilot status (2026-10-23)
 
-- Tasks T1, T2, M1, M4 (see below) × 3 tools (opencode, OpenHands, Devin) × 3 attempts ≈ 36 runs
-- Shared brain: **Claude Sonnet via OpenRouter** (`~/.config/secrets/openrouter.env`)
+- Built at `~/evals/` — tasks in `~/evals/tasks/`, config `config.pilot.yaml`, cost-bench at `~/evals/repos/sample-agent-cost-bench`
+- Key discovery: `agent-cost-bench` supports `runner: local` score scripts — better than docker for repo tasks (repo lands at workspace ROOT, not src/)
+- Held-out tests verified discriminating both directions (fail at parent / pass at fix) for T1, M1, M2
+- **Both paid lanes capped**: OpenRouter key $10/wk limit hit; Gemini project monthly spend cap hit. Pivoted to free lane: `bench` model group on LiteLLM proxy (`100.102.134.91:4000`) → `gemini-3.5-flash-lite`
+- opencode provider: custom `litellm` provider in `~/.config/opencode/opencode.json` (openai-compatible + `{env:LITELLM_KEY}`)
+- openhands: needs `LLM_MODEL=litellm_proxy/bench` — the unrecognized alias name disables prompt caching (Gemini free tier rejects CachedContent → 429). `openai/` route makes it echo system prompt instead of tool-calling.
+- First results (flash-lite, T1): opencode 6/7 tests w/ `covers` near-miss (real fix `covered_by`); openhands 0 edits (model too weak for its agent protocol)
+- flash-lite verdict: intern-grade — finds the file, plausible wrong fixes, MUST be behind test gates
+- Blocked: `devin auth login`, `agy` install+login (both manual); OR reset 2026-10-26
+- Held-out-test bias: injected Go tests reference fix-commit symbols (e.g. `rc.connected`) — compile fail = 0; may undercount behaviorally-correct divergent fixes
 - Antigravity deferred — `agy` needs manual install + Google login
 
 ### Steps
