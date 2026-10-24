@@ -369,3 +369,15 @@ Door changes shipped (246481a9e): lesson delete op (guarded devin/tony)
 route + private-only status — origin gap, same as OPS-0820); Fable polish
 (OR 402 weekly cap, resets Oct 26). Arm A: Jaccard 0.31 deterministic vs
 agent; hybrid wins. Delete op ready for when origin registers it.
+
+### JEV = umbrella term (2026-10-24, Tony)
+
+In the ada-nest system, **JEV** is the umbrella term for the task-routing /
+lane-selection layer: any cheap classifier that decides which brain/lane
+handles a task (noul gates, decision classifiers, the cascade router).
+Tony: "it's actually the vital component." The cascade (BEN-0811) is the
+architecture; JEV is the router at its center. Current JEV instances:
+jev-student (noul gate, :8778), decision-arena bench (laya 0.704 on 27
+cases), jev-triage pack, and the lesson-audit hybrid (deterministic gate +
+agent recall). The rainy-day question per task: "cheapest lane whose
+output passes the gate" — JEV picks the lane, the gate verifies.
