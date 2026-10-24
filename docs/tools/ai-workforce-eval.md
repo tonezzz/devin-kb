@@ -123,7 +123,9 @@ class".
    - WP CPT post = task spec; comment = agent result + score
    - chat msg → runner → reply with result + verify status
    - WP CPT post = task spec; comment = agent result + score
-4. Deliverable: **routing matrix + fallback ladder** in devin-kb — per task class,
+4. Deliverable: **routing matrix + fallback ladder** in devin-kb
+   — DONE 2026-10-24:  (routing rule, per-lane
+   gates, delegation protocol, go-live matrix, babysitting roles) — per task class,
    cheapest→richest lanes that pass the gate, with cost/task and babysitting
    minutes (the hidden cost of cheap AI)
 
