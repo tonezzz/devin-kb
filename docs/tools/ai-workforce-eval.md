@@ -360,3 +360,12 @@ Arm A (audit accuracy): deterministic vs flash-lite on 5 samples,
 Jaccard 0.31 — deterministic = precision, agent = recall+false-pos.
 Hybrid wins: deterministic scan + agent review + human gate. Junk
 lessons id 2259/2261 (speed-probe probes) flagged for deletion.
+
+### lesson-polish execution (2026-10-24)
+
+Door changes shipped (246481a9e): lesson delete op (guarded devin/tony)
++ next_review override. Review queue: 9/9 overdue advanced to 2026-11-07
+(verified). Blocked: junk deletion (WP-origin lesson CPT lacks DELETE
+route + private-only status — origin gap, same as OPS-0820); Fable polish
+(OR 402 weekly cap, resets Oct 26). Arm A: Jaccard 0.31 deterministic vs
+agent; hybrid wins. Delete op ready for when origin registers it.
