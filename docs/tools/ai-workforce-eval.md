@@ -348,3 +348,15 @@ blockers), qwen3:8b served on the T4. config.colab-live.yaml run: **0/4**
 gap = model capability, not hardware. GPU helps only with a capable model
 (gpt-oss:20b would be the T4 upgrade). Ladder stands: local = chores +
 codemod; code = paid (Fable) or capable open model.
+
+### lesson-polish (2026-10-24, OPS-0829 + KNB-0830)
+
+Education CPT audit built + first scan: 66 lessons, 44 flagged
+(27 R3 decision-no-pointer, 10 R1 overdue, 4 R4 orphan, 2 R2 junk).
+Door gaps found: /lesson has no delete op (junk probes stuck; Cloudflare
+blocks WP DELETE 403/1010 → KNB-0830); re-file preserves next_review
+(overdue = due-for-review queue, needs review-date override to advance).
+Arm A (audit accuracy): deterministic vs flash-lite on 5 samples,
+Jaccard 0.31 — deterministic = precision, agent = recall+false-pos.
+Hybrid wins: deterministic scan + agent review + human gate. Junk
+lessons id 2259/2261 (speed-probe probes) flagged for deletion.
