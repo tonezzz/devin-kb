@@ -169,3 +169,18 @@ idc03 :8778) → hint mode (pattern in agent prompt) + codemod mode
 corpus with same gates → every verified fix mined back (P5). Key question:
 does a hint move t1 6/7 → 7/7, and at what cost? Seed mine started:
 `~/evals/patterns/mine-1.jsonl` (10+ records).
+
+### Pattern bench first results (2026-10-24, OPS-0809)
+
+t1 arms (terrology elevated-geom predicate fix):
+- arm0 agent alone (flash-lite): 6/7 — near-miss `covers` or timeout
+- arm1 agent + pattern hint: 6/7 BUT correctly localized (glob→grep the
+  predicate) then stopped — hint fixes localization, not completion
+- arm2 deterministic codemod: **7/7 in 0.7s, $0** — pattern hypothesis
+  confirmed at its strongest case; codemod encodes exact semantics where
+  models near-miss
+- arm3 JEV-routed: next
+Pattern store: mddb `code-patterns` (seeded from mine-1.jsonl). Lessons:
+verify-venv deps must declare runtime libs; opencode provider registry
+clobbered by testing causes phantom proxy errors. Bench file:
+`~/evals/patterns/bench-t1-results.md`.
