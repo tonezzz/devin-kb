@@ -210,3 +210,15 @@ found `intersects` (r1) and `covered_by` (r2).
 - Classifier training data = trigger→class pairs from mines
   (train-minilm-clf.py pipeline). Small initial set; grows via P5
   (every verified fix mined back).
+
+### M1 verifier coupling (2026-10-24)
+
+M1 held-out tests reference the ORIGINAL fix's internals (`rc.connected`,
+`rc.lagMs`, `rc.applier`) — a behaviorally-correct divergent fix
+(agent used `streamConnected` + `IsHealthy`) compiles-fails. Handler test
+also type-coupled (`ReplicationLag *int64` vs untyped int). Attempted an
+interface-agnostic behavioral test: client-contract part works, but the
+handler needs a live-leader mock that doesn't exist — proper fix = new
+M1-behavioral task with a mockable interface. Recorded as design
+limitation, not model failure. The paid m1 Go edits are capability
+evidence regardless.
