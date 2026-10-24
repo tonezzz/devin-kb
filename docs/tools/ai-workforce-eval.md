@@ -294,14 +294,16 @@ Minimal run (t1 + o1, opencode, 1 repeat): **2/2 PASS in 60s**.
 
 ### Fable m1 result (2026-10-24)
 
-0/2 on the gate BUT both runs made real high-quality Go edits (r1:
-`streamConnected atomic.Bool` + correct lazy-dial reasoning +
-LeaderAddr/CurrentLSN accessors; r2: 131-line handlers+client). Both
-failed only on the known compile-boundary (`rc.connected` vs
-`streamConnected` — same as Gemini). Verdict: Fable Go capability
-confirmed; M1 verifier is the blocker for both models. Fix = mockable-
-interface M1-behavioral task. Burn: ada key $1.3/$10 after Fable runs —
-cheap.
+0/2 on the old coupled gate. CORRECTED by the m1-behavioral rescore
+(see below + `~/evals/m1-behavioral-rescore-20261024.md`): r1 wired the
+handler correctly (`Healthy: replClient.IsHealthy()`) and passes the
+behavioral gate **1.0** — the old verifier's compile-boundary was a
+false negative. r2 made **zero code edits** (the "131-line
+handlers+client" figure was the injected held-out test diff, not agent
+work). Verdict: Fable Go capability confirmed at 1.0 on a real attempt;
+M1 verifier was the blocker, now fixed. Burn: ada key ~$10 weekly cap
+EXHAUSTED as of ~16:55 (402 on the m1-behavioral rerun) — paid lane down
+until reset (~Oct 26) or key raise.
 
 ### FIRST REAL JOB DONE (2026-10-24) — timer-alert resolved
 
@@ -316,22 +318,25 @@ verify (unit exit 0). The procedure works on real production work.
 
 Built `~/evals/tasks/m1-behavioral/`: held-out test asserts the HTTP
 contract (follower with unhealthy client must NOT report healthy:true),
-using ONLY public API + the repo's own handler-test helper — no internal
-field names. Bidirectional: parent FAILS (hardcoded Healthy:true),
-real fix c0850f0 PASSES.
+using public API + the repo's own handler-test helper. Bidirectional
+(independently re-verified, dispatch idc02): parent scores 0.5 (bug
+caught), real fix c0850f0 = 1.0.
 
-KEY FINDING: both Fable m1 runs (and Gemini earlier) fixed the CLIENT
-(IsHealthy/streamConnected) but MISSED wiring the handler — `Healthy:
-true` stayed hardcoded at line 43. The old verifier crashed on
-`rc.connected` (compile-boundary) so this real incompleteness was
-invisible; the behavioral verifier catches it. With the one-line handler
-fix applied, Fable's workspace PASSES. The behavioral verifier is
-strictly more informative.
+CORRECTED m1 retrospective (rescore of all attempt workspaces):
+paid lane = **3/4 real attempts fully correct** (fable-r1, or3-r1,
+or-openhands — all wire `Healthy` from client state), 1/4 real partial
+(or3-r2: client fixed, handler never wired — the one true "wiring gap").
+3 more runs made no edits (fable-r2, or-opencode, fresh m1beh run that
+died on OR 402) → baseline 0.5 each. Old verifier recorded 0/7 —
+compile-boundary conflated with capability.
 
-### m1-behavioral Fable run (2026-10-24)
-
-Score 0.5 (1/2: LagContract passed, NotHardcoded failed). Fable explored
-via subagent but no handler wiring landed in 253s. Value proven: the
-behavioral verifier gives honest graduated scores (0.5 = half contract)
-where the old verifier crashed at 0.0. m1 needs a handler-wiring nudge in
-the prompt or multi-attempt; the verifier is the correct gate regardless.
+Subtleties the rescore surfaced:
+- Parent `IsHealthy()` exists but uses time-since-last-entry — the
+  semantics the prompt explicitly bans (idle caught-up follower must
+  stay healthy). Real fix = connected+lag semantics AND handler wiring.
+- Behavioral test does not yet cover the idle-healthy case — residual
+  gap; an impl could pass while still being time-based.
+- Harness bug found: verifier injects tests by filename → clobbers
+  tracked repo tests (replication_handlers_test.go etc.) and residue
+  contaminates later scoring. Needs unique inject names or
+  snapshot/restore. m2 has same pattern — needs m2-behavioral.
