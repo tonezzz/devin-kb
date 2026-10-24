@@ -279,3 +279,13 @@ Two real chores delegated per the new procedure:
 - Delegations need explicit `target_host` (agent host != target host).
 - Some "failures" are correct alerts (exit-1 by design) — diagnosis must
   distinguish bug from intended signal.
+
+### Fable 5.1 bench (2026-10-24) — L3 proven
+
+Minimal run (t1 + o1, opencode, 1 repeat): **2/2 PASS in 60s**.
+- o1 = 1.0 (13s); t1 = **7/7 (60s)** — within→covered_by WITH explanatory
+  comment (exact semantic fix; 4x faster than Gemini OR 218-275s).
+- t1 head-to-head: flash-lite 6/7 (167s+), local CPU 6/7 no-edit, Gemini OR
+  7/7 (218-275s), **Fable 7/7 (60s)**, codemod 7/7 (0.7s $0).
+- L3 frontier lane proven. Full matrix (m1, repeats, openhands) = 
+  config.fable-or.yaml, ready. Route: or-claude-fable-5.1 on LiteLLM proxy.
