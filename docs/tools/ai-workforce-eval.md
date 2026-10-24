@@ -502,3 +502,17 @@ hardware — qwen3:8b AND gpt-oss:20b both fail to drive opencode on T4.
 GPU speed doesn't fix tool-use. Local lane = chores (marginal); code =
 paid/frontier/Devin. Harness fixes pending: t1-gptoss PYTHONPATH,
 m1 Go-verify step (behavioral_test.go now in pack inputs).
+
+### JEV card-triage pilot (2026-10-25, Phase 1 of jev-pilot)
+
+10 real backlog cards x jev-student + jevos (wire: /v1/systemone with
+questions as DICT keyed by name — jevos 422s on lists). FINDINGS:
+jev-student = noul-only (choice falls back 'answer' conf 0.0); jevos =
+real lane choices, correct on obvious cards (dispatch-bump=codemod,
+eval-ide*=free_lane) + flagged a done card as close-gate (real noul
+call). jevos = routing winner for the lane slot. Report:
+evals/results/jev/jev-card-triage-report.md. Next: wire jevos lane into
+runner-agent dispatch; expand corpus; Phase 2 noul-gate on destructive ops.
+Also: chaba-lessons-audit timer installed (07:40 daily, first run 68
+lessons / 4 flagged — overdue x2 caught correctly). bench-verifier card
+closed (BEN-0832).
