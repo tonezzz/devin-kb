@@ -234,3 +234,15 @@ iOS gotchas solved: AudioContext forced sampleRate rejected by Safari;
 ScriptProcessor flaky → MediaRecorder + server-side ffmpeg. Card ADA-0816.
 Upgrade path: T4 + qwen3:8b for speed/Thai (roomkit VRAM table: 8GB→qwen3:4b,
 omen 4GB is the floor).
+
+### Voice P0 DONE (2026-10-24, ADA-0817 closed)
+
+Full-duplex-ready voice mini-app verified by Tony: VAD auto-endpoint
+(900ms), Thai STT in, forced-English clean TTS out, streaming 160ms PCM
+chunks + turn IDs + barge-in (tap during playback = instant stop).
+Bugs fixed: Piper `AudioChunk.audio_int16_bytes` (not `.audio`); Thai in
+HTTP headers → latin-1 UnicodeEncodeError (URL-encode X-Transcript/X-Reply);
+English voice mangling Thai (force English replies; Thai Piper voice
+th_TH-tsync2 downloaded but needs tltk+pandas — follow-up). Next: P1
+speculative ASR (Moonshine Tiny) + adaptive endpointing table; Thai voice
+install.
