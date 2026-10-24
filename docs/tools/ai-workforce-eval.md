@@ -184,3 +184,18 @@ Pattern store: mddb `code-patterns` (seeded from mine-1.jsonl). Lessons:
 verify-venv deps must declare runtime libs; opencode provider registry
 clobbered by testing causes phantom proxy errors. Bench file:
 `~/evals/patterns/bench-t1-results.md`.
+
+### t1 corrected head-to-head (2026-10-24, OR rerun clean)
+
+| lane | result | time | cost |
+|---|---|---|---|
+| flash-lite agent | 6/7 (`covers` fails — excludes everything) | 167s+ | ~$0 |
+| qwen3/gpt-oss local CPU | 6/7 (no edit) | 9-273s | $0 |
+| OR gemini-3.5-flash agent | **7/7 (2/2 PASS)** | 218-275s | ~$0.01 |
+| deterministic codemod | **7/7** | 0.7s | $0 |
+| JEV-routed (arm3) | **7/7** | ~2s | $0 |
+
+Nuance: the pattern encodes the PROPERTY (boundary-touching covered cells
+count), not one literal string — the gate accepts both `intersects` and
+`covered_by`; `covers` and `within` both fail. The paid model independently
+found `intersects` (r1) and `covered_by` (r2).
