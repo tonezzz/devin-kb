@@ -381,3 +381,12 @@ jev-student (noul gate, :8778), decision-arena bench (laya 0.704 on 27
 cases), jev-triage pack, and the lesson-audit hybrid (deterministic gate +
 agent recall). The rainy-day question per task: "cheapest lane whose
 output passes the gate" — JEV picks the lane, the gate verifies.
+
+### lesson-polish nest pack (2026-10-24)
+
+Drive pack `lesson-polish` shipped (runs on any worker): deterministic
+R1-R5 audit → out/lesson-audit-*.json. Standalone verified: 68 lessons,
+39 flagged (R3=27, R5=20 soft, R4=4, R2 thin=2). 4 lessons
+deterministic-polished with KB pointers ($0); 9/9 review dates advanced.
+Remaining 27 R3 = Fable polish queue (post-OR-reset). JEV = umbrella
+term for routing/lane-selection in ada-nest (KB).
