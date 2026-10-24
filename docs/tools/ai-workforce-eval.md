@@ -199,3 +199,14 @@ Nuance: the pattern encodes the PROPERTY (boundary-touching covered cells
 count), not one literal string — the gate accepts both `intersects` and
 `covered_by`; `covers` and `within` both fail. The paid model independently
 found `intersects` (r1) and `covered_by` (r2).
+
+### Pattern library growth (2026-10-24)
+
+- mddb `code-patterns` collection: 4 seeded patterns (3 Go + 1 Python),
+  each with trigger/class/transform/commit + codemod-verified flag.
+- Mine expansion: chaba + ada-voice = feature-dense, few fix+test pairs
+  (3 candidates). mddb-fork deep mine = replication-class dense (4/6
+  commits) — the natural lane-classifier seed ("replication" vs "other").
+- Classifier training data = trigger→class pairs from mines
+  (train-minilm-clf.py pipeline). Small initial set; grows via P5
+  (every verified fix mined back).
