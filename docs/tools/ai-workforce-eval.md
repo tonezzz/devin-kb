@@ -255,3 +255,27 @@ WebSocket streaming architecture (client sends audio during recording →
 server pre-warms LLM). ROI vs the working tap-once + auto-endpoint lane:
 not justified on omen CPU. DECISION: park P1; accept 15-20s CPU thinking
 as the rainy-day floor until a T4/GPU worker is available.
+
+### Lane delegation pilot (2026-10-24, OPS-0823) — sharpened boundaries
+
+Two real chores delegated per the new procedure:
+1. **timer-alert-idc03-ada-memory-sync** (multi-step remote diagnosis) —
+   free lane FAILED (flash-lite did 3 bash calls then stopped with a
+   conversational reply; run 1 also had a host mismatch). Human diagnosis
+   completed: the unit exits 1 BY DESIGN when vault-vs-MDDB conflicts
+   exist; 9 real conflicts pending since 10-16 (persona/self, people/kk,
+   assets/*); the alert is correct, needs a Tony decision (take-remote /
+   take-vault / per-item). Recorded on the card with options.
+2. **stash-graveyard-triage** (single-repo list+classify+report) —
+   COMPLETED: all 7 stashes droppable (6 stale metadata, 1 already merged
+   into live assessment; sprawl 13->6 branches, 20->8 worktrees).
+   CLOSED as done.
+
+**Sharpened lane boundaries (the real deliverable):**
+- Free lane (flash-lite) carries: single-step verifiable ops (probe/write/
+  report), single-repo list+classify+report. VERIFIED in pilot.
+- Free lane CANNOT carry: multi-step remote diagnosis (loses thread) —
+  route to L2 paid or a step-script harness.
+- Delegations need explicit `target_host` (agent host != target host).
+- Some "failures" are correct alerts (exit-1 by design) — diagnosis must
+  distinguish bug from intended signal.
