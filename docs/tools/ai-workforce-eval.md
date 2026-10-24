@@ -399,3 +399,13 @@ Remaining: 20 soft-Thai (legit --no-th), 4 series-orphans, 2 junk
 (WP-origin delete blocked, KNB-0830). The split-rule policy gap is
 CLOSED system-wide. The JEV-routed report/education generator worked in
 production: JEV (audit rules) routes -> Fable polishes -> audit verifies.
+
+### lesson-polish loop CLOSED (2026-10-24)
+
+R4 series-orphans linked (4->0). Final audit: 68 lessons, 20 flagged —
+ALL policy-critical (R1 review dates, R3 split-rule, R4 series) at ZERO.
+Remaining: 20 soft-Thai (legit --no-th) + 2 junk (WP-origin delete
+blocked, KNB-0830). Feedback loop: audit -> polish -> verify proven;
+scheduling it as a recurring nest job carded (lesson-audit-scheduled) so
+new lessons self-audit. The JEV-routed education generator is now a
+self-perpetuating production loop.
