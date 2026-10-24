@@ -390,3 +390,12 @@ R1-R5 audit → out/lesson-audit-*.json. Standalone verified: 68 lessons,
 deterministic-polished with KB pointers ($0); 9/9 review dates advanced.
 Remaining 27 R3 = Fable polish queue (post-OR-reset). JEV = umbrella
 term for routing/lane-selection in ada-nest (KB).
+
+### lesson-polish Fable pass COMPLETE (2026-10-24)
+
+All 27 R3-flagged lessons updated with Fable-generated KB/SSOT pointers
+(633-1108 chars each, ~$1-3 total). Re-audit: R3 27->0, flagged 44->23.
+Remaining: 20 soft-Thai (legit --no-th), 4 series-orphans, 2 junk
+(WP-origin delete blocked, KNB-0830). The split-rule policy gap is
+CLOSED system-wide. The JEV-routed report/education generator worked in
+production: JEV (audit rules) routes -> Fable polishes -> audit verifies.
