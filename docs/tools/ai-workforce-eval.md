@@ -246,3 +246,12 @@ English voice mangling Thai (force English replies; Thai Piper voice
 th_TH-tsync2 downloaded but needs tltk+pandas — follow-up). Next: P1
 speculative ASR (Moonshine Tiny) + adaptive endpointing table; Thai voice
 install.
+
+### Voice P1 parked (2026-10-24)
+
+Speculative ASR (Moonshine Tiny) evaluated: installed but API is finicky
+(model_path/download helpers), and true speculative pre-inference needs a
+WebSocket streaming architecture (client sends audio during recording →
+server pre-warms LLM). ROI vs the working tap-once + auto-endpoint lane:
+not justified on omen CPU. DECISION: park P1; accept 15-20s CPU thinking
+as the rainy-day floor until a T4/GPU worker is available.
