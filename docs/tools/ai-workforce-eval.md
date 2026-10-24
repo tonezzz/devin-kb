@@ -447,3 +447,15 @@ had its own $10 budget (exhausted at 10.15) — raised to $30 (the top-up
 blocker was the virtual key, not OR). Omen disk: ollama models moved to
 /data (47G freed, 85%->69%), cpufreq 2GHz installed, GPT backup in
 /var/backups/omen-gpt/.
+
+### T4 pack queue (2026-10-24, 6 staged)
+
+1. eval-t1-gptoss — gpt-oss:20b on t1 (capable-model-on-GPU experiment)
+2. eval-m1-behavioral — qwen3:8b on m1 (honest verifier)
+3. eval-m1-gptoss — gpt-oss:20b on m1 (Go wiring test)
+4. eval-o2 — qwen3:8b on o2 YAML chore (self-contained)
+5. lesson-polish — deterministic audit (CPU)
+6. eval-code-lane — DONE (qwen3 t1, 0 edits, 183s)
+Priority: t1-gptoss > m1-gptoss > m1-behavioral > o2 > lesson-polish.
+The gpt-oss packs answer whether a CAPABLE open model on GPU passes the
+code gate — omen CPU gpt-oss made no edits; T4 = speed + capability test.
