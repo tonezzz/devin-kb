@@ -289,3 +289,14 @@ Minimal run (t1 + o1, opencode, 1 repeat): **2/2 PASS in 60s**.
   7/7 (218-275s), **Fable 7/7 (60s)**, codemod 7/7 (0.7s $0).
 - L3 frontier lane proven. Full matrix (m1, repeats, openhands) = 
   config.fable-or.yaml, ready. Route: or-claude-fable-5.1 on LiteLLM proxy.
+
+### Fable m1 result (2026-10-24)
+
+0/2 on the gate BUT both runs made real high-quality Go edits (r1:
+`streamConnected atomic.Bool` + correct lazy-dial reasoning +
+LeaderAddr/CurrentLSN accessors; r2: 131-line handlers+client). Both
+failed only on the known compile-boundary (`rc.connected` vs
+`streamConnected` — same as Gemini). Verdict: Fable Go capability
+confirmed; M1 verifier is the blocker for both models. Fix = mockable-
+interface M1-behavioral task. Burn: ada key $1.3/$10 after Fable runs —
+cheap.
