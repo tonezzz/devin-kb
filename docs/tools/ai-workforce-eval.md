@@ -409,3 +409,16 @@ blocked, KNB-0830). Feedback loop: audit -> polish -> verify proven;
 scheduling it as a recurring nest job carded (lesson-audit-scheduled) so
 new lessons self-audit. The JEV-routed education generator is now a
 self-perpetuating production loop.
+
+### Harness fix: held-out injection clobber (2026-10-24, BEN-0832)
+
+The bench's held-out test injection copied files by FILENAME into
+services/mddbd/ — clobbering tracked tests (m1/m2 held-out files ARE
+tracked repo tests). ALL prior m1/m2 scores were tainted by this bug.
+Fixed: unique zz_heldout_ prefix + GOWORK=off + delta-only held-out.
+Control-validated: m2 held-out 3/3 at fix commit 497b982; m1-behavioral
+0.67 parent / 1.0 fix (discriminates the hardcoded Healthy:true bug).
+m2 Fable honest rerun: 0/3 — Fable edited only the test file, never
+implemented verifySnapshot/swapDatabaseVerified (genuine capability
+finding). m1 idle-healthy handler coverage needs a stream test hook
+(BEN-0833).
