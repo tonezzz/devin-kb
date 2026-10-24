@@ -551,3 +551,12 @@ unknown/jevos-down (was returning ''). Supervised trial: m1-stream-
 test-hook queued -> paid_frontier -> Fable -> auto-dispatch (first real
 JEV-routed job; dispatcher claims after quiet hours 06:00 BKK with
 JEV_LANE=1). Corpus: evals/results/jev/jev-lane-corpus-expanded.json.
+
+### JEV routing LIVE — first fleet-completed job (2026-10-25 06:03)
+
+jev-live-dispatch-demo (OPS-0835): queued 06:02:41 -> idc02 runner-agent
+claimed -> executed -> committed bb2502c06 -> auto-merged a75beb2d ->
+card done in 60s. The JEV routing loop is production-real: card in ->
+fleet work -> merged. Scoping learned: kanban-dispatch claims
+type=dispatch only (manual skipped cleanly); idc03 push-guard defers
+chaba pushes to idc02; JEV_LANE=1 drop-in live on idc03.
