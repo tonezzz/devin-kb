@@ -309,3 +309,19 @@ versions for all 9 conflicts (backup: /tmp/ada-memory-backup-*); 0
 conflicts remain. Closed the alert card. This ran end-to-end through the
 delegation procedure (OPS-0823): classify → per-item decision → route →
 verify (unit exit 0). The procedure works on real production work.
+
+### M1-behavioral verifier (2026-10-24) — strictly better, catches real bug
+
+Built `~/evals/tasks/m1-behavioral/`: held-out test asserts the HTTP
+contract (follower with unhealthy client must NOT report healthy:true),
+using ONLY public API + the repo's own handler-test helper — no internal
+field names. Bidirectional: parent FAILS (hardcoded Healthy:true),
+real fix c0850f0 PASSES.
+
+KEY FINDING: both Fable m1 runs (and Gemini earlier) fixed the CLIENT
+(IsHealthy/streamConnected) but MISSED wiring the handler — `Healthy:
+true` stayed hardcoded at line 43. The old verifier crashed on
+`rc.connected` (compile-boundary) so this real incompleteness was
+invisible; the behavioral verifier catches it. With the one-line handler
+fix applied, Fable's workspace PASSES. The behavioral verifier is
+strictly more informative.
