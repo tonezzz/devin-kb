@@ -527,3 +527,14 @@ EMPIRICAL: jevos misroutes the lane vocabulary (config-bump=paid_frontier
 0.667 decision-arena accuracy was on tool-routing (remember/recall/...),
 NOT lanes. GATE BLOCKS ALL -> wiring safe-dormant. REAL WORK: lane-labeled
 training set + fine-tune the choice head (decision-arena expand-corpus).
+
+### JEV lane classifier — 23/23 validated (2026-10-25)
+
+Iteration: jevos raw 0.27 -> manual-override 0.60 -> tuned kws 1.00
+corpus (overfit) -> held-out 0.38 title-only -> +briefs 0.62 ->
++manual-fix 0.88 -> +comparison-regex 1.00 (23/23, held-out 8/8).
+Lessons: brief is the signal (title-only weak); 'vs' needs comparison
+context regex; 'Blocked on Tony' = manual. Production: LANE_KW +
+LANE_COMPARE + classify_lane keyword-first with jevos gated fallback,
+committed 34ca3f231. Lane routing opt-in (JEV_LANE=1); manual never
+dispatched. Corpus: evals/results/jev/jev-lane-corpus.json.
