@@ -459,3 +459,34 @@ blocker was the virtual key, not OR). Omen disk: ollama models moved to
 Priority: t1-gptoss > m1-gptoss > m1-behavioral > o2 > lesson-polish.
 The gpt-oss packs answer whether a CAPABLE open model on GPU passes the
 code gate — omen CPU gpt-oss made no edits; T4 = speed + capability test.
+
+### m2-behavioral verifier + residue purge (2026-10-24, dispatch idc02)
+
+m2 now has an interface-agnostic behavioral gate
+(`tasks/m2-mddb-snapshot-proof/tests/behavioral_m2_test.go`, runs as
+`TestZzBehav*`): the discriminator fixture is a DB with a SYNCED freelist
+and a corrupted branch page — it OPENS cleanly but FAILS the full
+invariant walk. Tests assert (1) `rc.replaceDatabase` accepts it
+(open-only proof on the snapshot path), (2) `s.restoreFromBackup` rejects
+it (untrusted restores keep the full check), (3) a healthy snapshot still
+installs. Only parent-commit symbols are referenced — ANY correct
+implementation passes, no verifySnapshot/swapDatabaseVerified names
+required. The coupled held-out file was retired to
+`tests/heldout_m2_test.go.coupled`. Control: parent 60ac37c = 0.667 (bug
+caught), fix 497b982 = 1.0. Scored via /tmp/m2b-verify/{parent,fix}.
+
+Residue purge (BEN-0828 completion): all three mddb task verifiers now
+delete stale injected tests before copying — both zz_heldout_* AND
+bare-name leftovers from the pre-prefix era, git-status-guarded so
+tracked files are never touched. t1/t1-hint/t2 verifiers back up tracked
+files the held-out set overwrites and restore them after pytest (t2
+collides with 7 tracked terrology test files — the clobber was
+intentional-version replacement, but residue is now cleaned).
+
+CORRECTION to "Fable honest m1/m2 verdicts": the 452s m1-behavioral run
+(0.67, zero edits) and the m2 run (0/3, tests-only edit) BOTH died on
+OpenRouter 402 — `openrouter_key_limit` weekly cap ("requested 32000
+tokens, can only afford 27739/30047"). These are credit-truncated runs,
+not capability datapoints; the m2 TDD-test-only tree is what a 402 mid-run
+leaves. Paid-lane verdict needs rerun after the ~Oct 26 weekly reset (or
+cap raise — card ask #1 stands).
