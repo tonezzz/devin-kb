@@ -300,3 +300,12 @@ failed only on the known compile-boundary (`rc.connected` vs
 confirmed; M1 verifier is the blocker for both models. Fix = mockable-
 interface M1-behavioral task. Burn: ada key $1.3/$10 after Fable runs —
 cheap.
+
+### FIRST REAL JOB DONE (2026-10-24) — timer-alert resolved
+
+ada-memory-sync unit GREEN (Result=success, ExecMainStatus=0) after 8
+days of daily failures. Resolution: --take-remote pulled curated remote
+versions for all 9 conflicts (backup: /tmp/ada-memory-backup-*); 0
+conflicts remain. Closed the alert card. This ran end-to-end through the
+delegation procedure (OPS-0823): classify → per-item decision → route →
+verify (unit exit 0). The procedure works on real production work.
