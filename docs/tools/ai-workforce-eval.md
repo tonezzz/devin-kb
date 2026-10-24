@@ -422,3 +422,15 @@ m2 Fable honest rerun: 0/3 — Fable edited only the test file, never
 implemented verifySnapshot/swapDatabaseVerified (genuine capability
 finding). m1 idle-healthy handler coverage needs a stream test hook
 (BEN-0833).
+
+### T4 pack result + OR exhaustion (2026-10-24)
+
+eval-code-lane pack COMPLETED on Colab: eval-t1-2026-10-24.json —
+qwen3:8b, opencode, 183s, verify rc=1, no source edits (subagent JSON
+error derailed the loop). Confirms the live-tunnel result: T4 GPU =
+fast + can't agent (capability gap, not latency). eval-m1-behavioral
+pack staged (honest verifier, second T4 data point). OR key hit 99.8%
+($9.98/$10 weekly) — m1-fable run was a 402 credit-exhaustion failure
+(17s, zero edits), NOT a valid capability result. Fable reruns need
+top-up or Oct 26 reset. Free lane: flash-lite unchanged; Colab packs
+run free on the T4.
