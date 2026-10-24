@@ -560,3 +560,15 @@ card done in 60s. The JEV routing loop is production-real: card in ->
 fleet work -> merged. Scoping learned: kanban-dispatch claims
 type=dispatch only (manual skipped cleanly); idc03 push-guard defers
 chaba pushes to idc02; JEV_LANE=1 drop-in live on idc03.
+
+### JEV model-chain — proven to env, blocked at devin CLI (2026-10-25)
+
+Probes OPS-0836..0844: lane routing chain works through the env layer
+(DEBUG: DISPATCH_MODEL=True, model=flash-lite, lane=free_lane at
+dispatch). BLOCKED at the last layer: devin CLI v3000.10.35 on runners
+ignores --model (session ran deepseek-v4-pro, exit=1). Fix: (a) verify
+devin CLI --model support, or (b) route non-devin lanes via opencode
+executor (honors model); devin stays for the devin lane. Fixed along
+the way: 'macbook' manual keyword too eager -> action-bound (a88496755).
+Fleet: 6/7 runners patched (idc01 down). macbook keyword lesson: host
+lists in briefs can false-positive manual.
