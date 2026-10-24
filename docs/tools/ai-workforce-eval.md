@@ -327,3 +327,11 @@ true` stayed hardcoded at line 43. The old verifier crashed on
 invisible; the behavioral verifier catches it. With the one-line handler
 fix applied, Fable's workspace PASSES. The behavioral verifier is
 strictly more informative.
+
+### m1-behavioral Fable run (2026-10-24)
+
+Score 0.5 (1/2: LagContract passed, NotHardcoded failed). Fable explored
+via subagent but no handler wiring landed in 253s. Value proven: the
+behavioral verifier gives honest graduated scores (0.5 = half contract)
+where the old verifier crashed at 0.0. m1 needs a handler-wiring nudge in
+the prompt or multi-attempt; the verifier is the correct gate regardless.
