@@ -434,3 +434,16 @@ pack staged (honest verifier, second T4 data point). OR key hit 99.8%
 (17s, zero edits), NOT a valid capability result. Fable reruns need
 top-up or Oct 26 reset. Free lane: flash-lite unchanged; Colab packs
 run free on the T4.
+
+### Fable honest m1/m2 verdicts (2026-10-24)
+
+Fable m1-behavioral (honest verifier, ada key budget fixed $10->$30):
+0.67 (2/3), 452s, ZERO source edits — hardcoded-health test fails.
+Fable m2: 0/3 (no verifySnapshot/swapDatabaseVerified). Fable profile:
+STRONG contained single-file tasks (t1/o1 7/7, 60s), WEAK cross-layer Go
+wiring (client->handler, verifier threading). Routing: paid frontier for
+contained fixes; cross-layer Go -> Devin/human. LiteLLM ada virtual key
+had its own $10 budget (exhausted at 10.15) — raised to $30 (the top-up
+blocker was the virtual key, not OR). Omen disk: ollama models moved to
+/data (47G freed, 85%->69%), cpufreq 2GHz installed, GPT backup in
+/var/backups/omen-gpt/.
