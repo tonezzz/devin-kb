@@ -68,6 +68,15 @@ or raise the OpenRouter cap (cheapest paid). idc02 is the declared
   `ollama-hermes8b`, `ollama-qwen3` (all → omen 100.75.102.88:11434),
   backed up config before edits, validated YAML, container restarted,
   health 200.
+- ⚠️ **Colab notebook must serve qwen3:8b, not gemma3:12b** — change
+  `MODEL = "qwen3:8b"` on line 30 of `colab-serve-worker.ipynb` (already
+  listed as an alternative; ~5GB, fits T4 15GB, tool-capable). gemma3
+  official build has no tools → agent loops fail even on the GPU.
+- t1 result with qwen3:8b on omen CPU: **0.857 (6/7) with ZERO edits** —
+  one reasoning step (484 reasoning tok), no tool calls, then stopped.
+  Same near-miss score as flash-lite but *without attempting a fix*.
+  CPU-bound 8B is too slow to sustain opencode's agent loop. The T4 GPU
+  version is the actual test.
 
 ### Task classes
 
