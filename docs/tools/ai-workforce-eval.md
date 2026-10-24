@@ -340,3 +340,11 @@ Subtleties the rescore surfaced:
   tracked repo tests (replication_handlers_test.go etc.) and residue
   contaminates later scoring. Needs unique inject names or
   snapshot/restore. m2 has same pattern — needs m2-behavioral.
+### T4 live lane (2026-10-24) — GPU confirmed NOT the code-lane gap
+
+colab-qwen3 tunnel UP (UFW port-22 fix + new-key authorization were the
+blockers), qwen3:8b served on the T4. config.colab-live.yaml run: **0/4**
+— same as omen CPU (zero edits, baseline 6/7). CONFIRMED: local-lane code
+gap = model capability, not hardware. GPU helps only with a capable model
+(gpt-oss:20b would be the T4 upgrade). Ladder stands: local = chores +
+codemod; code = paid (Fable) or capable open model.
