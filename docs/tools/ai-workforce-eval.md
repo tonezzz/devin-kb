@@ -538,3 +538,16 @@ context regex; 'Blocked on Tony' = manual. Production: LANE_KW +
 LANE_COMPARE + classify_lane keyword-first with jevos gated fallback,
 committed 34ca3f231. Lane routing opt-in (JEV_LANE=1); manual never
 dispatched. Corpus: evals/results/jev/jev-lane-corpus.json.
+
+### JEV lane classifier — expanded 53/53 + supervised trial (2026-10-25)
+
+Expanded corpus: 45 backlog cards hand-labeled + 8 held-out = 53/53
+production regression (deployed 4971cd4b6). Set changes: bench/
+productionize/hardening->paid_frontier; purge/delete-old/recurring/
+nest-job->codemod; failing/dep-fix/quadlet/warm-standby->devin;
+rotation/rekey/lease-teardown->manual; fixture/report->free_lane.
+REMOVED over-eager 'timer'/'api' (misrouted). devin-safe fallback for
+unknown/jevos-down (was returning ''). Supervised trial: m1-stream-
+test-hook queued -> paid_frontier -> Fable -> auto-dispatch (first real
+JEV-routed job; dispatcher claims after quiet hours 06:00 BKK with
+JEV_LANE=1). Corpus: evals/results/jev/jev-lane-corpus-expanded.json.
