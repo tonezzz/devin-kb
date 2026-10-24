@@ -158,3 +158,14 @@ openhands. Requires `colab-serve-worker.ipynb` tunnel UP on idc03
 `/model/new` cell registering `colab-gemma3` on the LiteLLM proxy. Model:
 gemma3:12b (~8GB q4, fits T4 15GB). Watch: `ss -tln | grep 127.0.0.1:11434` on
 idc03, or probe `curl http://127.0.0.1:11434/api/version` there.
+
+## Pattern-match coding direction (2026-10-24, OPS-0809)
+
+Tony hypothesis: much of agent coding = pattern match + replace/connect.
+Plan: pattern library mined from repo history (leak-safe, no benchmark-task
+commits) → JEV matcher (semantic top-k over triggers; jev-student live on
+idc03 :8778) → hint mode (pattern in agent prompt) + codemod mode
+(deterministic; t1 covered_by first) → bench arms 0-3 on the existing
+corpus with same gates → every verified fix mined back (P5). Key question:
+does a hint move t1 6/7 → 7/7, and at what cost? Seed mine started:
+`~/evals/patterns/mine-1.jsonl` (10+ records).
