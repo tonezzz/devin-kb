@@ -222,3 +222,15 @@ handler needs a live-leader mock that doesn't exist — proper fix = new
 M1-behavioral task with a mockable interface. Recorded as design
 limitation, not model failure. The paid m1 Go edits are capability
 evidence regardless.
+
+### Voice Tier-1 LIVE (2026-10-24, ADA-0816 done)
+
+Fully-local voice loop on omen proven from an iPhone: MediaRecorder webm
+→ ffmpeg decode → faster-whisper STT → hermes3:8b (Ollama) → Piper TTS →
+audio back on phone. URL https://tony-omen.taila0626a.ts.net/ (tailscale
+HTTPS = secure context for mic). Runs as systemd `voice-miniapp` on omen
+(~/voice-miniapp/{server.py,index.html}), ada-whisper venv. $0, zero cloud.
+iOS gotchas solved: AudioContext forced sampleRate rejected by Safari;
+ScriptProcessor flaky → MediaRecorder + server-side ffmpeg. Card ADA-0816.
+Upgrade path: T4 + qwen3:8b for speed/Thai (roomkit VRAM table: 8GB→qwen3:4b,
+omen 4GB is the floor).
