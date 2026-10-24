@@ -490,3 +490,15 @@ tokens, can only afford 27739/30047"). These are credit-truncated runs,
 not capability datapoints; the m2 TDD-test-only tree is what a 402 mid-run
 leaves. Paid-lane verdict needs rerun after the ~Oct 26 weekly reset (or
 cap raise — card ask #1 stands).
+
+### T4 verdict — capability ceiling CONFIRMED (2026-10-24, 4 pack runs)
+
+Worker live via merged notebook (ada-nest-worker-all-in-one, id
+16JqZy0bvBmv3t7MtA88szq-1OpEJzR93). Runs: m1-qwen3 52s no edits;
+m1-gptoss 198s tool-hallucination + prompt-loss; o2-qwen3 122s score 0.0
+(1 write, partial); t1-gptoss 159s planning-only (0 tool calls), verify
+invalid (ImportError). FINAL: local-lane code gap = CAPABILITY, not
+hardware — qwen3:8b AND gpt-oss:20b both fail to drive opencode on T4.
+GPU speed doesn't fix tool-use. Local lane = chores (marginal); code =
+paid/frontier/Devin. Harness fixes pending: t1-gptoss PYTHONPATH,
+m1 Go-verify step (behavioral_test.go now in pack inputs).
