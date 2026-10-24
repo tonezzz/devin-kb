@@ -516,3 +516,14 @@ runner-agent dispatch; expand corpus; Phase 2 noul-gate on destructive ops.
 Also: chaba-lessons-audit timer installed (07:40 daily, first run 68
 lessons / 4 flagged — overdue x2 caught correctly). bench-verifier card
 closed (BEN-0832).
+
+### JEV lane routing — wiring done, classifier NOT ready (2026-10-25)
+
+Lane routing wired into kanban-dispatch (Phase 2 of jev-pilot): LANE_MODELS
+(free_lane->flash-lite, paid_frontier->Fable), manual-skip, classify_lane
+via jevos, confidence gate 0.5 -> devin fallback, JEV_LANE=1 opt-in.
+EMPIRICAL: jevos misroutes the lane vocabulary (config-bump=paid_frontier
+@0.03, hardware=devin @0.06; only install=free_lane @0.55 correct). The
+0.667 decision-arena accuracy was on tool-routing (remember/recall/...),
+NOT lanes. GATE BLOCKS ALL -> wiring safe-dormant. REAL WORK: lane-labeled
+training set + fine-tune the choice head (decision-arena expand-corpus).
