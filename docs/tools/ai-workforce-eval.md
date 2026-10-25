@@ -5,6 +5,18 @@ not "which tool wins" but **which (surface × brain × task class) lane carries 
 work at acceptable cost** — so when a paid lane gets capped/expensive, work
 re-routes instead of stalling. Rainy-day planning.
 
+
+## Naming (settled 2026-10-25)
+
+- **`XNest` = a facility** — the shared infra/family: **DevNest** = the
+  developer-AI facility (this fleet), **Ada Nest** = the household-AI
+  facility (Ada-HA/Ada-home instances).
+- **`NestX` = an agent title** — an instance with a role, e.g. a
+  **NestDev** AI connecting to Ada DevNest; NestAgent, NestOps follow the
+  same pattern. ("AgentNest"/"NestAgent" both fit the pattern.)
+- In chat: "run it on DevNest" = the fleet/facility; "a NestDev" = one
+  agent in it.
+
 ## Axes
 
 ### Surfaces (how work reaches the agent)
