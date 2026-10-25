@@ -74,7 +74,7 @@ List prices Oct 2026, $/1M in/out. All support tool calling + ~1M context.
 ## Experiments queued / next iteration
 
 - [ ] Add `groq-free` model group (gpt-oss-120b + qwen3.8-27b) to LiteLLM → run `config.ops.yaml` vs `bench` baseline
-- [x] OpenCode Zen free models — DONE 2026-10-25 (`config.devnest-zen.yaml`): 
+- [x] OpenCode Zen free models as a zero-config runner — DONE 2026-10-25 (`config.devnest-zen.yaml`), see iter-1b below
 - [ ] $10 OpenRouter credit → unlock 1K/day `:free` + paid pass-through for DeepSeek V4 Flash bench
 - [ ] Mistral Experiment tier key → Codestral eval leg
 - [ ] Compare Groq TTFT for ada voice aux vs current path
