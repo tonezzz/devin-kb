@@ -572,3 +572,19 @@ executor (honors model); devin stays for the devin lane. Fixed along
 the way: 'macbook' manual keyword too eager -> action-bound (a88496755).
 Fleet: 6/7 runners patched (idc01 down). macbook keyword lesson: host
 lists in briefs can false-positive manual.
+
+### Real-job planning: T4/Omen + JEV (2026-10-25)
+
+Planned and carded ADA-0847. Safe work started: decision-arena ran on
+idc03 CPU — jev-student 0.481 acc (choice 0.125), jevos 0.667 acc
+(choice 0.875, warm p50 345ms); Laya unavailable (missing module). Omen
+is constrained: 38G free on /data, 81G /home; hold Qwen3.6-35B/33GB
+image pulls until storage gate is met. T4 jobs: reserve for image/voice/
+embedding throughput, not weak agent loops. nest-efficiency report attempt
+hung on Drive/queue reads and was stopped safely; add read timeouts before
+making it a scheduling gate.
+
+OpenCode lane executor: actual process launched with requested flash-lite
+model and LITELLM_KEY, proving model selection; closeout integration was
+not compatible with normal dispatch worktrees, so OPENCODE_LANES remains
+gated off. OPS-0846 tracks branch/worktree/merge closeout.
