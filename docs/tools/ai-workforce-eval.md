@@ -620,3 +620,10 @@ production indexes, or start a second main runner. First pack:
 `gap-packs/embedding-smoke/pack.json` (10 docs, no production mutation).
 This fills idle GPU time while cache/dependency prep proceeds without
 risking the main Nest queue.
+
+### T4 embedding benchmark complete (2026-10-25)
+
+`t4-embedding-bench` completed safely: nomic-embed-text, 100 documents,
+768 dimensions, 9.809s batch (10.2 docs/s), 3 queries in 0.187s, Tesla T4
+reported 14.6/15.36 GiB. No production index mutation. Artifact:
+`ada-nest/packs/t4-embedding-bench/out/embedding-report.json`.
