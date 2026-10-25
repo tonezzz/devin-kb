@@ -74,7 +74,7 @@ List prices Oct 2026, $/1M in/out. All support tool calling + ~1M context.
 ## Experiments queued / next iteration
 
 - [ ] Add `groq-free` model group (gpt-oss-120b + qwen3.8-27b) to LiteLLM → run `config.ops.yaml` vs `bench` baseline
-- [ ] OpenCode Zen free models as a zero-config `config.zen.yaml` runner
+- [x] OpenCode Zen free models — DONE 2026-10-25 (`config.devnest-zen.yaml`): 
 - [ ] $10 OpenRouter credit → unlock 1K/day `:free` + paid pass-through for DeepSeek V4 Flash bench
 - [ ] Mistral Experiment tier key → Codestral eval leg
 - [ ] Compare Groq TTFT for ada voice aux vs current path
@@ -88,3 +88,4 @@ List prices Oct 2026, $/1M in/out. All support tool calling + ~1M context.
 ## Iteration log
 
 - **2026-10-25 — iter 1:** initial landscape. Finds: Groq free 120B (biggest free-brain upgrade), OpenRouter $10→1K/day trick, cache-price as the real agent-cost axis, OpenCode Zen free lane, GitHub Models free frontier.
+- **2026-10-25 — iter 1b (eval-verified):** ran `config.devnest-zen.yaml` — 4 lanes × o1–o4 ops tasks, opencode surface. Results: **zen/deepseek-v4.1-flash-free 4/4 pass @ 15.8s avg (fastest)**, **zen/glm-5.3-flash-free 4/4 @ 19.9s**, bench/gemini-3.5-flash-lite 4/4 @ 27.0s, **local qwen3:8b 0/4 (all timeouts ≥600s)**. Verdict: Zen free coding models match-or-beat the flash-lite baseline at $0 with zero config — a second always-on free lane alongside `bench`. Local 8B on CPU remains non-viable for agent loops. Run: results/20261025_025240_643010.{json,html}.
