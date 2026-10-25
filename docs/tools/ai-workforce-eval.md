@@ -627,3 +627,13 @@ risking the main Nest queue.
 768 dimensions, 9.809s batch (10.2 docs/s), 3 queries in 0.187s, Tesla T4
 reported 14.6/15.36 GiB. No production index mutation. Artifact:
 `ada-nest/packs/t4-embedding-bench/out/embedding-report.json`.
+
+### DevNest host-assessment skill batch (2026-10-25)
+
+Packaged a reusable read-only skill under `evals/tasks/devnest-host-assessment`
+(`skill.md`, `assess.py`, `verify.py`). Ran it against five reachable hosts:
+tony-dell, idc02, idc03, mn01, tony-macbook. All five JSON artifacts passed
+the verifier with zero SSH errors. Load/core snapshots: dell 0.44, idc02
+2.40 (hot), idc03 1.28, mn01 0.85, MacBook 1.03. No remediation performed.
+This is the first real DevNest skill batch replacing low-urgency Devin host
+assessment work; Omen remains a separate offline/rescue target.
