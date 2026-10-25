@@ -600,3 +600,12 @@ OpenCode lane executor: actual process launched with requested flash-lite
 model and LITELLM_KEY, proving model selection; closeout integration was
 not compatible with normal dispatch worktrees, so OPENCODE_LANES remains
 gated off. OPS-0846 tracks branch/worktree/merge closeout.
+
+### T4 package queue prepared (2026-10-25)
+
+Staged `ada-nest/packs/t4-embedding-bench`: 100-document
+`nomic-embed-text` throughput/query benchmark, GPU telemetry, JSON artifact,
+no production index mutation, 3GB GPU/4GB disk gate. Queue order: embedding
+throughput first; existing voice packs are complete; image generation remains
+T4-only; Omen Qwen35/image pulls remain blocked by only 38G `/data` free.
+OpenCode model-specific executor remains gated until branch closeout works.
