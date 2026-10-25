@@ -609,3 +609,14 @@ no production index mutation, 3GB GPU/4GB disk gate. Queue order: embedding
 throughput first; existing voice packs are complete; image generation remains
 T4-only; Omen Qwen35/image pulls remain blocked by only 38G `/data` free.
 OpenCode model-specific executor remains gated until branch closeout works.
+
+### Nest gap GPU procedure (2026-10-25)
+
+Prepared and staged `queue/gap-runner.py` + `gap-packs/PROCEDURE.md`.
+Gap jobs run opportunistically only while the main heartbeat is fresh and
+in `prep`/`prep-wait`, with separate gap lease, VRAM gate, timeout, and
+artifact gate. They cannot pull models, touch HF/Drive cache, mutate
+production indexes, or start a second main runner. First pack:
+`gap-packs/embedding-smoke/pack.json` (10 docs, no production mutation).
+This fills idle GPU time while cache/dependency prep proceeds without
+risking the main Nest queue.
