@@ -103,6 +103,34 @@ search-then-write does not.
 | L4 Devin × multi-step/prod | **LIVE** | ada-memory-sync resolved end-to-end (9 conflicts → green) |
 | OpenHands/local-CPU × anything | **NOT LIVE** | gpt-oss schema-misaligned, hermes3 no tool calls, 8B CPU too slow; needs T4 + qwen3:8b |
 
+## 5b. Tool surface per lane (added 2026-10-26, AUD-0886)
+
+Lanes pick the *brain*; MCP servers are the *hands*. Tool-surface rules:
+
+- **Every lane: schema weight is spend.** Each configured MCP server injects
+  its full tool schema into the model's context every session. alphavantage
+  alone is ~5.6k lines (~15k tokens). Keep `mcp_config.json` lean; push
+  rarely-used servers behind `mcp-allowlist.py` or per-task profiles.
+- **L0/L4 diagnostic surface**: `mcp-debug` (compact multi-host commands,
+  measured token savings) + `mcp-health` (service health, alerts,
+  auto-recovery). Prefer these over raw ssh for fleet ops — the compact
+  output IS the token save.
+- **Knowledge/memory**: `mddb` (doc store, semantic search, ada banks),
+  `mcp-weaviate` (chaba repo corpus). Rule: weaviate = chaba code/SSOT,
+  mddb = everything else.
+- **Execution/control**: `postgres` (read-only queries), `github` (repo
+  ops), `playlive` (browser verify — the consumer-surface proof the
+  OPS-0731 rule demands), `mcp-colab` (local-gpu-packs control plane).
+- **Domain tools** (gate by task): `yomi` (LINE), `docs-trade` (trade docs),
+  `alphavantage` (market data — allowlist core fns), `mcp-gpu` (GPU/imagen),
+  `notebooklm` (when repaired).
+- **Dead/retired as of audit**: home-assistant, michael-ha, michael-dev,
+  workflows, docs, notebooklm all fail `mcp_list_tools`; mcp-llama is
+  superseded by the LiteLLM gateway. Full verdicts: `mcp-fleet-audit.md`.
+- **Cheap lanes get cheap tools.** An L1 run should not be given a 30-tool
+  playlive schema it will never call — tool exposure follows the run's
+  verifier contract, not the global config.
+
 ## 6. Babysitting / verification roles
 
 - **Inline verifier** (script, deterministic): mandatory on every model-lane
