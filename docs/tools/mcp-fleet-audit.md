@@ -41,9 +41,16 @@ Live `mcp_list_tools` probe of every server in `~/.config/devin/mcp_config.json`
 
 ## Action queue
 
-- [ ] Repair HA-MCP bridges on dell (9584/9585/19584) — card if >15min
-- [ ] `mcp-allowlist.py` for alphavantage (core 6 fns) + playlive (~10 core)
-- [ ] Retire mcp-llama from `mcp_config.json` (or repoint LLAMA_URL to LiteLLM `/v1`)
+- [x] Repair HA-MCP bridges on dell (9584/9585/19584) — resolved: all three live again 2026-11-09 (respond to `mcp_list_tools`)
+- [x] `mcp-allowlist.py` for alphavantage + playlive — done 2026-11-09, differently:
+  playlive allowlisted 25→14 tools (`allowlist.playlive.json` — session lifecycle +
+  navigate/click/fill/eval/state/screenshot; stash + host-admin dropped).
+  alphavantage is a **URL** server — the stdio allowlist proxy can't wrap it, so it
+  was **removed** from `mcp_config.json` instead (~15k tokens/session saved; re-add
+  for trade sessions — `docs-trade` still covers trade docs).
+- [x] Retire mcp-llama from `mcp_config.json` — done 2026-11-09 (LiteLLM gateway
+  owns model routing; LLAMA_URL pointed at routinely-down omen).
+  Config backup: `mcp_config.json.bak-20261109`. Fleet now 16 servers.
 - [ ] SSOT drift fixes: mddb transport+endpoint, add mcp-colab, mark dead servers `status: down-2026-10-26`
 - [ ] Decide workflows/notebooklm/docs: repair or retire (usage evidence first)
 - [ ] Check mcp-focus last-use vs board-api focus flow
