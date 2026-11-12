@@ -15,8 +15,14 @@ idc03 hit 100% and idc02 accumulated 109G of stale dispatch worktrees.
 
 | Artifact | Location | Retain | Method |
 |---|---|---|---|
-| dispatch/Devin worktrees | `~/CascadeProjects/dispatch-wt-*` | 7 days | `scripts/clean-dispatch-worktrees.sh` (weekly timer) |
+| ALL linked git worktrees (dispatch-*, chaba-*, ada-*, detached, eval) | `git worktree list` per repo | 7 days (max of last-commit / dir-mtime) | `scripts/git-worktree-gc.sh` (weekly timer, supersedes clean-dispatch-worktrees.sh) |
 | worktree salvage | `~/wt-salvage/` | 30 days | pruned by same script |
+
+GC scope (2026-11-12): `git-worktree-gc.sh` iterates `git worktree
+list` per repo (`WT_GC_REPOS`, default chaba + ada-voice), prunes
+tombstones first, skips the main worktree and the caller's own cwd,
+salvages dirty checkouts to `~/wt-salvage/*.tgz` before force-removal.
+Env: `WT_GC_RETAIN_DAYS` (7), `WT_SALVAGE_DAYS` (30), `DRY_RUN=1`.
 | mddb DB backups | `~/mddb-backups/` | 3 days | `find -mtime +2 -delete` inside `mddb-backup.sh` (idc03) |
 | Home Assistant backups (HAOS) | `/backup/` | newest 2 | `rm` + `ha backups reload` (manual, michael-ha) |
 | journald | `/var/log/journal/` | 500 MB | `journalctl --rotate` then `--vacuum-size=500M` |
