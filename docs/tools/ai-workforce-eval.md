@@ -666,6 +666,14 @@ checkout for linked worktrees, so agents wrote `evals/shadow/task/` into
 the parent repo; run-window-mtime files are copied into the wt before
 verify.
 
-OpenCode Zen free models (`big-pickle`, `deepseek-v4-flash-free`,
-`mimo-v2.5-free`) NOT added — no Zen credential on any host; needs
-`opencode auth login` or a key in `~/.config/secrets/` first.
+OpenCode Zen free models — RESOLVED same day: no credential needed inside
+the opencode client (`opencode auth login` on dell actually added GitHub
+Copilot, a separate bonus lane — `github-copilot/*` models work, metered
+in Copilot ACUs). BUT the raw `opencode.ai/zen/v1` API rejects
+non-opencode callers (`FreeUsageLimitError`), so Zen models CANNOT ride
+LiteLLM — dispatch as `model=opencode/<id>` (provider `opencode`).
+Verified PASS on host-health: `big-pickle` 31s, `deepseek-v4.1-flash-free`
+55s, `glm-5.3-flash-free` 26s, `mimo-v2.6-flash-free` 33s. Admitted to
+ops-readonly profile (chaba PR #168). Zen model ids are NOT the same as
+the earlier guesses: `deepseek-v4.1-flash-free`, `mimo-v2.6-flash-free`,
+`glm-5.3-flash-free` (see `opencode models | grep ^opencode/`).
