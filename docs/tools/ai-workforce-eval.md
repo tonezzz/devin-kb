@@ -637,3 +637,35 @@ the verifier with zero SSH errors. Load/core snapshots: dell 0.44, idc02
 2.40 (hot), idc03 1.28, mn01 0.85, MacBook 1.03. No remediation performed.
 This is the first real DevNest skill batch replacing low-urgency Devin host
 assessment work; Omen remains a separate offline/rescue target.
+
+### Free-lane expansion + opencode shadow-eval (2026-11-13)
+
+Added 10 free aliases to the idc03 LiteLLM gateway (`~/.config/litellm/config.yaml`,
+virtual keys chaba/bench/cline whitelists updated via `/key/update`):
+
+- **OpenRouter `:free`** (work today, opencode-verified): `or-free-nemotron-ultra`
+  (550B MoE, 1M ctx), `or-free-north-code` (cohere north-mini-code),
+  `or-free-nemotron-35` (nemotron-3.5-lightning). All three **PASS** the
+  `host-health` shadow fixture (26s/36s/82s, artifacts verified).
+- **Cloudflare Workers AI** (`CF_API_WORKER_TOKEN`, OpenAI-compatible
+  `/ai/v1`): `cf-llama-70b`, `cf-llama-8b`, `cf-qwen3-30b`, `cf-gpt-oss-120b`,
+  `cf-mistral-small` (128k ctx), `cf-nemotron-120b` (256k), `cf-embed-m3`.
+  Gotchas: free tier = **10k neurons/day** (exhausted during eval — 429s
+  until daily reset); llama-3.3-70b has only **24k ctx** (too small for
+  opencode's ~26k prompt); gpt-oss rejects array `content` parts that
+  opencode sends; reasoning models need big `max_tokens`. CF aliases are
+  deployed but unproven for opencode — retest after neuron reset.
+- Ghost aliases `cf-*` previously in dell `opencode.json` now resolve to
+  real routes (config backup: `config.yaml.bak-free-lanes-*`).
+
+Harness fixes in `chaba/scripts/devnest/shadow_eval.py` (uncommitted,
+exec checkout): dropped dead `--dir` flag + added `--standalone` for
+opencode v2.2.7 (background service didn't inherit `LITELLM_KEY`, causing
+401s); added artifact rescue — opencode resolves project root to the main
+checkout for linked worktrees, so agents wrote `evals/shadow/task/` into
+the parent repo; run-window-mtime files are copied into the wt before
+verify.
+
+OpenCode Zen free models (`big-pickle`, `deepseek-v4-flash-free`,
+`mimo-v2.5-free`) NOT added — no Zen credential on any host; needs
+`opencode auth login` or a key in `~/.config/secrets/` first.
