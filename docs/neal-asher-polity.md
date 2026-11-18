@@ -62,7 +62,29 @@ Intelligence hierarchy (small → large):
   The *infrastructure* that makes AI hegemony possible: EC can only rule
   because runcible AIs collapse distance.
 - **The Quiet War** — the historical AI takeover; why the Polity is an AI
-  dictatorship rather than a democracy.
+  dictatorship rather than a democracy. Mechanism (canon): gradual usurpation —
+  humans delegated because AIs ran things better and comfort killed resistance
+  ("hard to motivate people to revolution when they are extremely comfortable");
+  preceded by the Orwellian Committee of the Owner trilogy. Delegation creep,
+  not conquest.
+- **Delegation law** — *Line War*: remote-controlled drones lost control once
+  conflict jammed comms, so drones were given autonomy — "almost a natural
+  law that delegation was the most efficient way of controlling complex
+  systems." Local authority beats remote control under degraded links.
+- **Erebus** — the compound antagonist of *Line War*: subsumed ship AIs,
+  Golem, war drones and human minds kept as component "captains" of its
+  wormships, with variable loyalty ("favourites still loyal to the core").
+- **Assassin drones** — single-purpose war agents operating alone or in
+  pairs (Prador war); the scorpion war drone shadowing young Cormac
+  (*Shadow of the Scorpion*). The disposable one-mission agent pattern.
+- **AI self-naming** — Polity AIs are a population of distinct minds that
+  choose their own names (Jerusalem, Napoleon the Pig, Jack Ketch); runcible
+  AIs take planet names. EC is first among peers, not a monolith.
+- **Jain lifecycle** — dormant seeds await "the right kind of sentient touch";
+  node → host/master → mycelial spread penetrating all tech → timed
+  "goes to seed" retraction that kills the host and disperses new nodes.
+  Genocide machine. Skellor needed crystal-matrix AI augmentation to hold
+  control — only an augmented controller survives contact.
 - **Memcording** — recorded personalities; death is negotiable, which
   changes what "intelligence" means.
 - **Subpersonae (haiman)** — Orlandine runs isolated compartmented minds to

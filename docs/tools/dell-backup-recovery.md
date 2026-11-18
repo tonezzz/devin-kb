@@ -69,9 +69,9 @@ GitHub (code), idc03 MDDB (fleet data), and optionally `restic copy` repo to idc
 
 Stale entries to be aware of: `Boot0000 Windows Boot Manager`, `Boot0001 Ubuntu (sda)`, `Boot0002 Ubuntu` all point at the OLD sda layout (dead since repartition) — harmless, firmware skips missing paths; can be deleted with `efibootmgr -b XXXX -B`.
 
-## Test-boot checklist (pending)
+## Test-boot (declined 2026-11-18)
 
-Reboot dell → at GRUB/firmware pick `Ubuntu-Rescue` (or `efibootmgr -n 0004` one-time boot) → verify: ssh in, `mount /dell-backup`, `restic snapshots` lists repo, `mount /timeshift` shows snapshots.
+Not performed — entry verified statically only (ESP files, grub.cfg, UEFI entry, BootOrder). If ever needed: reboot → firmware boot menu / `efibootmgr -n 0004` → verify ssh in, `mount /dell-backup`, `restic snapshots`, `mount /timeshift`.
 
 ## Known gaps
 
