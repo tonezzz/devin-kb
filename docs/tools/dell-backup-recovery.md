@@ -90,4 +90,3 @@ restic -r /dell-backup/restic snapshots   # with env sourced
 sudo timeshift --list
 sudo efibootmgr | grep -E "Boot0004|Boot0005|BootOrder"
 ```
-</invoke><|end_message|><|message_model|><|content_thinking|>Oops — I accidentally left `</content></invoke>` tags at the end of the file content. Need to fix that — remove the trailing tags.<|end_message|><|message_model|>exec<|content_invoke_tool_json|>{
