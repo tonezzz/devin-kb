@@ -28,6 +28,29 @@ sda = internal Seagate 500G SATA HDD (was old Windows disk). sdb = USB HGST 1TB.
 - home = /home/tony minus GoogleDrive/.cache/node_modules/container data
 - Logs: `~/var/log/dell-restic-<mode>.log`
 
+### Fleet restic → /dell-backup/restic-fleet/<host> (added 2026-11-18)
+
+Per-host rebuild-set backups over sftp from idc03, idc02, tony-omen,
+tony-macbook, mn01 → separate encrypted repo per host on dell's sdb.
+Each host: `~/.local/bin/fleet-restic-backup.sh` + user timer
+(fleet-restic-backup.timer, daily ~04:30-05:30 staggered).
+Backs up ~/.config/{secrets,systemd,containers,devin}, ~/.local/bin,
+~/bin, ~/.ssh + /var/backups/host-etc-snapshot.tar.gz.
+macbook uses a static binary in ~/.local/bin (no sudo needed) and has
+no /etc snapshot (no sudo) — Persistent timer catches up when awake.
+Passphrases: `~/.config/secrets/restic-fleet-<host>.env` on BOTH the
+host and dell (dell copies are inside the critical backup).
+
+### Off-site leg → idc03:~/restic-offsite (added 2026-11-18)
+
+Weekly Sun 06:00 `dell-restic-offsite.timer` runs
+`~/.local/bin/dell-restic-offsite-copy.sh`: `restic copy` of the latest
+3 critical snapshots from the main repo + latest snapshot from each
+fleet repo into `sftp:tony@idc03:restic-offsite` (single consolidated
+encrypted repo, ~2-3G). Home-tier snapshots stay local-only (50G+ —
+idc03 disk can't hold them); documented gap.
+Offsite password: `~/.config/secrets/restic-offsite.env` on dell.
+
 ### Timeshift → sda3 (internal HDD)
 
 - Config: `/etc/timeshift/timeshift.json` — RSYNC mode, weekly schedule, keep 4 weekly/6 monthly.
