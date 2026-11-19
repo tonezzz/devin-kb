@@ -90,6 +90,62 @@ verdict.json with null fields"), then search, then rewrite it filled —
 write-then-fill survives the early-stop failure mode where
 search-then-write does not.
 
+## 4a. Executor contract — declared `action.executor` (added 2026-11-19, OPS-1023)
+
+The §2 lanes pick the *brain*; `action.executor` on the card declares
+*who runs it*. Contract lives in `runner-agent.py _claimable()`
+(fail-closed at claim) and mirrors `dispatch_repos.EXECUTORS`. Source of
+truth: `ssot.procedures.yml → ai-lane-delegate`.
+
+**Rungs** (declared via `action.executor`; absent = devin path):
+
+| executor | Serves | Fail-closed rules |
+|---|---|---|
+| `devin` (default) | `type=dispatch` multi-step work via devin-dispatch | systemd hosts only; launchd runners serve it only when an opencode lane resolves |
+| `opencode` | dispatch cards on an OpenCode-capable host (`OPENCODE_LANES=1` + binary) | **requires staged `action.lane_envelope`** — claim is held without one (admission would fail at start and burn an attempt) |
+| `script` | `type=script` (or dispatch with `action.script.cmd+repo`) | needs cmd + repo_url + git on host |
+| `kk_mac_local` | bounded LLM lane on KKs-Mac-Studio | try-first: admitted `task_class` ∈ {summary, operator_brief, structured_extract, safe_route} + artifact inside lane roots; ineligible → falls back to next lane under the same claim |
+| `manual` | Tony's hands | never claimed |
+| `jules` / `nlm_batch` / `claude` | gated lanes (`JULES_LANES`/`NLM_LANES`/`CLAUDE_LANES=1` + tooling) | claim only where the lane can actually run; else card stays queued |
+
+An **unrecognised executor fails closed** (`unknown executor`) — the
+runner never guesses a route, and there is **no silent fallback**: a
+defer reason lands in card comms and `/ready` verdicts so the card
+visibly waits for a capable runner.
+
+**opencode = the L1-ops kanban-native path.** `lane=free_lane` maps to
+the `ops-readonly` profile (`LANE_PROFILES`): read-only host/MCP ops
+reports, task_classes `read_only`/`report`, `write/edit/patch` tools
+disabled, `target_host` required, cheap-tier models only
+(`litellm/gemini-3.5-flash-lite` default; `or-free-*` aliases allowed).
+idc02 is the declared free-lane compute host and serves it today.
+`RAILS_OPENCODE` rails: no git pushes, no board-api/network calls —
+the runner records progress/verdicts itself. Write-needing work stays
+on devin; `branch-code` is deliberately unmapped.
+
+**Staging rule:** an opencode-bound card MUST carry a complete
+`action.lane_envelope` before queueing — `executor=opencode` claims
+are held at claim-time without it, and executor-unset cards whose
+lane would resolve to opencode are held the same way (the
+"unstaged dispatch is held" failure class, 2026-11-19).
+
+**kk_mac_local** is try-first, not strict: the lane claims only when
+this host can serve it (`KK_MAC_LANES=1` + probe eligible + contract
+ok); when the lane is ineligible the card continues on the next lane
+under the same claim — the fallback is real repo work and still needs
+push capability.
+
+**Pre-flight before carding to a contract:** `GET /queue` on the board
+API returns per-card `verdicts`/`blocked`/`eligible` per host — check
+why a card would wait *before* declaring an executor/lane, instead of
+learning it from defer comms. (MEM-0239 burned two attempts on a
+missing `lane_envelope` the queue verdict would have shown upfront.)
+
+**Origin:** any actor — Tony, Ada voice, Devin, chaba automation —
+files executor cards through board-api `/card` + `/action`; the
+executor declaration is just action fields, so the contract applies
+everywhere cards come from.
+
 ## 5. Go-live matrix (proven as of 2026-10-24)
 
 | Lane × class | Status | Evidence |
